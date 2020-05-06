@@ -18,8 +18,7 @@
   "scripts": {
     "start": "set PORT=5000 && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "tailwind":"postcss src/styles/tailwind.scss -o src/styles/tailwind.css"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,9 +36,9 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.14.1",
     "@typescript-eslint/eslint-plugin": "^2.20.0",
     "@typescript-eslint/parser": "^2.20.0",
+    "autoprefixer": "^9.7.6",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.0",
@@ -50,9 +49,12 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.4.0",
+    "node-sass": "^4.14.1",
+    "postcss-cli": "^7.1.1",
     "prettier": "^1.19.1",
     "stylelint": "^13.2.0",
     "stylelint-config-prettier": "^8.0.1",
-    "stylelint-prettier": "^1.1.2"
+    "stylelint-prettier": "^1.1.2",
+    "tailwindcss": "^1.4.5"
   }
 }

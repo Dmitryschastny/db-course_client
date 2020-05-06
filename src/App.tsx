@@ -1,9 +1,10 @@
 import React from 'react';
+import 'styles/tailwind.css';
 
 const App: React.FC = () => {
   return (
     <>
-      <div>
+      <div className="flex">
         <div>МТБанк</div>
         <div>Приорбанк</div>
         <button>Connect a bank</button>
