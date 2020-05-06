@@ -1,17 +1,15 @@
 import React from 'react';
 import 'styles/tailwind.css';
+import { Accounts } from 'pages/Accounts';
+import { Transactions } from 'pages/Transactions';
 
 const App: React.FC = () => {
   return (
-    <>
-      <div className="flex">
-        <div>МТБанк</div>
-        <div>Приорбанк</div>
-        <button>Connect a bank</button>
-      </div>
-
-      <div>CARDS AND ACCOUNTS</div>
-    </>
+    <div className="p-4">
+      <Accounts />
+      <div className="mb-20"></div>
+      <Transactions />
+    </div>
   );
 };
 
