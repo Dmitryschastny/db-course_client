@@ -1,1 +1,4 @@
-export const a = 5;
+export type Credentials = {
+  email: string;
+  password: string;
+};

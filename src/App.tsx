@@ -8,11 +8,15 @@ import { SignIn } from 'pages/SignIn';
 import { SignUp } from 'pages/SignUp';
 
 const App: React.FC = () => {
+  const handleAuth = () => {
+    console.log('success auth!');
+  };
+
   return (
     <Router>
       <Switch>
         <Route path="/signin">
-          <SignIn />
+          <SignIn onAuth={handleAuth} />
         </Route>
         <Route path="/signup">
           <SignUp />
