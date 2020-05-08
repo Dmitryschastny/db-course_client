@@ -11,7 +11,7 @@ interface FormikValues {
 }
 
 interface Props {
-  onAuth(): void;
+  onAuth(token: string): void;
 }
 
 const SignIn: React.FC<Props> = ({ onAuth }) => {
@@ -26,10 +26,13 @@ const SignIn: React.FC<Props> = ({ onAuth }) => {
       const { email, password } = values;
 
       try {
-        const { status } = await clients.users.auth({ email, password });
+        const {
+          status,
+          data: { token },
+        } = await clients.users.auth({ email, password });
 
         if (status === 200) {
-          onAuth();
+          onAuth(token);
         }
       } catch (error) {
         const { status } = error.response;
