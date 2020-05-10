@@ -7,7 +7,7 @@ const Accounts: React.FC = () => {
       <div className="flex mb-4">
         <div className="p-1 border mr-2">МТБанк</div>
         <div className="p-1 border mr-2">Приорбанк</div>
-        <button className="p-1 bg-gray-200">Connect a bank</button>
+        <button className="p-1">Connect a bank</button>
       </div>
 
       <div className="text-lg font-bold">CARDS AND ACCOUNTS</div>

@@ -64,11 +64,11 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center h-full">
-      <div className="flex flex-col mt-20 p-5 bg-gray-300">
+      <div className="flex flex-col mt-20 p-5">
         <Formik {...formikConfig}>
           {formik => (
             <Form>
-              <div className="text-2xl mb-4">Sign up</div>
+              <div className="text-3xl font-bold mb-4">Sign up</div>
 
               <FormikInput name="email" label="Email" type="email" />
               <FormikInput name="password" label="Password" type="password" />
