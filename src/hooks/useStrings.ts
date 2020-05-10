@@ -1,17 +1,18 @@
-import { clients } from 'services/clients.config';
 import LocalizedStrings, { LocalizedStringsMethods } from 'react-localization';
-
-export type Languages<T> = {
-  en: T;
-  rus: T;
-};
+import { Languages } from 'services/LanguagesService';
+import { useContext } from 'react';
+import { AppContext } from 'App';
 
 type Strings<T> = T & LocalizedStringsMethods;
 
 export const useStrings: <T>(entries: Languages<T>) => Strings<T> = entries => {
+  const { language } = useContext(AppContext);
+
   const strings = new LocalizedStrings(entries);
 
-  strings.setLanguage('rus');
+  if (language) {
+    strings.setLanguage(language.code.toLowerCase());
+  }
 
   return strings;
 };

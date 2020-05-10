@@ -1,4 +1,4 @@
-import { Languages } from '../../hooks/useStrings';
+import { Languages } from 'services/LanguagesService';
 
 export interface StringEntries {
   logout: string;
@@ -8,7 +8,7 @@ export const stringEntries: Languages<StringEntries> = {
   en: {
     logout: 'Logout',
   },
-  rus: {
+  ru: {
     logout: 'Выйти',
   },
 };

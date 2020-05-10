@@ -2,7 +2,6 @@ import React from 'react';
 import { Formik, FormikConfig, Form } from 'formik';
 import { clients } from 'services/clients.config';
 import { FormikInput } from 'components/FormikInput';
-import { Link } from 'react-router-dom';
 import { PageTemplate } from 'components/templates/PageTemplate';
 import { FormikSelect } from 'components/FormikSelect';
 import { useStrings } from 'hooks/useStrings';

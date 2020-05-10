@@ -7,6 +7,7 @@ import { ProtectedRoute } from 'components/ProtectedRoute';
 import { routes } from 'routes';
 import { User } from 'services/UsersService';
 import { NoMath } from 'pages/NoMath';
+import { Language } from 'services/LanguagesService';
 
 type AuthContext = {
   authorized: boolean;
@@ -16,6 +17,7 @@ type AuthContext = {
 
 type AppContext = {
   user: User;
+  language?: Language;
 };
 
 export const AuthContext = React.createContext<AuthContext>({} as AuthContext);
@@ -48,8 +50,15 @@ const App: React.FC = () => {
     setAuthorized(false);
   };
 
+  const [settings, setSettings] = useState();
+  const [language, setLanguage] = useState<Language>();
+
   useEffect(() => {
     verifyUser();
+
+    clients.languages.getById(1).then(({ data }) => {
+      setLanguage(data);
+    });
   }, []);
 
   const routesContent = (
@@ -77,7 +86,7 @@ const App: React.FC = () => {
         value={{ authorized, onAuth: handleAuth, onLogout: handleLogout }}
       >
         {user && authorized ? (
-          <AppContext.Provider value={{ user }}>
+          <AppContext.Provider value={{ user, language }}>
             {routesContent}
           </AppContext.Provider>
         ) : (
