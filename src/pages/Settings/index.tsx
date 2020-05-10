@@ -5,6 +5,8 @@ import { FormikInput } from 'components/FormikInput';
 import { Link } from 'react-router-dom';
 import { PageTemplate } from 'components/templates/PageTemplate';
 import { FormikSelect } from 'components/FormikSelect';
+import { useStrings } from 'hooks/useStrings';
+import { stringEntries, StringEntries } from './constants';
 
 interface FormikValues {
   usePin: boolean;
@@ -25,6 +27,8 @@ const Settings: React.FC = () => {
     },
   };
 
+  const strings = useStrings<StringEntries>(stringEntries);
+
   return (
     <PageTemplate title="Settings">
       <div className="flex flex-col p-5 w-1/2">
@@ -42,8 +46,8 @@ const Settings: React.FC = () => {
                 <option value="0">BYN</option>
               </FormikSelect>
 
-              <button className="mb-1 w-1/2 self-end" type="submit">
-                Save
+              <button className="mb-1 w-auto self-end" type="submit">
+                {strings.save}
               </button>
             </Form>
           )}
