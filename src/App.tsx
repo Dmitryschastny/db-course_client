@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import 'styles/tailwind.css';
 import './styles/global.scss';
-import { Accounts } from 'pages/Accounts';
-import { Transactions } from 'pages/Transactions';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { SignIn } from 'pages/SignIn';
-import { SignUp } from 'pages/SignUp';
 import { clients } from 'services/clients.config';
 import { ProtectedRoute } from 'components/ProtectedRoute';
-import { Settings } from 'pages/Settings';
+import { routes } from 'routes';
 
 interface AppContext {
   authorized: boolean;
+  onAuth(token: string): void;
 }
 
 export const AppContext = React.createContext<AppContext>({} as AppContext);
@@ -34,28 +31,18 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ authorized }}>
+    <AppContext.Provider value={{ authorized, onAuth: handleAuth }}>
       <Router>
         <Switch>
-          <Route path="/signin">
-            <SignIn onAuth={handleAuth} />
-          </Route>
-          <Route path="/signup">
-            <SignUp />
-          </Route>
-          <Route path="/settings">
-            <Settings />
-          </Route>
-          <ProtectedRoute>
-            <Route path="/transactions">
-              <Transactions />
-            </Route>
-          </ProtectedRoute>
-          <ProtectedRoute>
-            <Route path="/accounts">
-              <Accounts />
-            </Route>
-          </ProtectedRoute>
+          {routes.map(({ path, page: Page, protected: p }) => {
+            const route = (
+              <Route path={path}>
+                <Page />
+              </Route>
+            );
+
+            return p ? <ProtectedRoute>{route}</ProtectedRoute> : route;
+          })}
         </Switch>
       </Router>
     </AppContext.Provider>

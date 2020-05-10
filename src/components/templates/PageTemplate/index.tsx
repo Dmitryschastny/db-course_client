@@ -1,4 +1,5 @@
 import React from 'react';
+import { Header } from 'components/Header';
 
 interface Props {
   title: string;
@@ -6,10 +7,13 @@ interface Props {
 
 const PageTemplate: React.FC<Props> = ({ title, children }) => {
   return (
-    <div className="p-10">
-      <div className="text-3xl font-bold mb-8rem">{title}</div>
-      {children}
-    </div>
+    <>
+      <Header />
+      <div className="p-10">
+        <div className="text-3xl font-bold mb-8rem">{title}</div>
+        {children}
+      </div>
+    </>
   );
 };
 

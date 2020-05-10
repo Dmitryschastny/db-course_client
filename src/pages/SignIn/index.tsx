@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Formik, FormikConfig } from 'formik';
 import { clients } from 'services/clients.config';
 import * as yup from 'yup';
 import { FormikInput } from 'components/FormikInput';
+import { AppContext } from 'App';
 
 interface FormikValues {
   email: string;
   password: string;
 }
 
-interface Props {
-  onAuth(token: string): void;
-}
+const SignIn: React.FC = () => {
+  const { onAuth } = useContext(AppContext);
 
-const SignIn: React.FC<Props> = ({ onAuth }) => {
   const [requestError, setRequestError] = useState('');
 
   const formikConfig: FormikConfig<FormikValues> = {
