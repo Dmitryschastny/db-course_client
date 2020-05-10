@@ -13,6 +13,7 @@ type Route = {
 };
 
 export enum Paths {
+  HOME = '/accounts',
   SIGN_IN = '/signin',
   SIGN_UP = '/signup',
   SETTINGS = '/settings',

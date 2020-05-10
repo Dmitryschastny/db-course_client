@@ -6,3 +6,12 @@ export type Credentials = {
 export type AuthResponse = {
   token: string;
 };
+
+export type User = {
+  id: number;
+  email: string;
+};
+
+export type MeResponse = {
+  user: User;
+};

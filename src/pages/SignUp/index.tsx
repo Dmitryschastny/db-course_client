@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Formik, FormikConfig } from 'formik';
 import { clients } from 'services/clients.config';
 import * as yup from 'yup';
 import { FormikInput } from 'components/FormikInput';
+import { AuthContext } from 'App';
+import { Paths } from 'routes';
 
 interface FormikValues {
   email: string;
@@ -12,6 +14,8 @@ interface FormikValues {
 }
 
 const SignUp: React.FC = () => {
+  const { authorized } = useContext(AuthContext);
+
   const [requestError, setRequestError] = useState('');
   const [done, setDone] = useState(false);
 
@@ -93,6 +97,10 @@ const SignUp: React.FC = () => {
       </div>
     </div>
   );
+
+  if (authorized) {
+    return <Redirect to={{ pathname: Paths.HOME }} />;
+  }
 
   return (
     <div className="flex flex-col items-center h-full">

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Formik, FormikConfig } from 'formik';
 import { clients } from 'services/clients.config';
 import * as yup from 'yup';
 import { FormikInput } from 'components/FormikInput';
-import { AppContext } from 'App';
+import { AuthContext } from 'App';
+import { Paths } from 'routes';
 
 interface FormikValues {
   email: string;
@@ -12,7 +13,7 @@ interface FormikValues {
 }
 
 const SignIn: React.FC = () => {
-  const { onAuth } = useContext(AppContext);
+  const { onAuth, authorized } = useContext(AuthContext);
 
   const [requestError, setRequestError] = useState('');
 
@@ -56,6 +57,10 @@ const SignIn: React.FC = () => {
         .required('Required'),
     }),
   };
+
+  if (authorized) {
+    return <Redirect to={{ pathname: Paths.HOME }} />;
+  }
 
   return (
     <div className="flex flex-col items-center h-full">

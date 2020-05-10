@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Header } from 'components/Header';
+import { AuthContext } from 'App';
 
 interface Props {
-  title: string;
+  title?: string;
 }
 
 const PageTemplate: React.FC<Props> = ({ title, children }) => {
+  const { authorized } = useContext(AuthContext);
+
   return (
     <>
-      <Header />
+      {authorized && <Header />}
       <div className="p-10">
-        <div className="text-3xl font-bold mb-8rem">{title}</div>
+        {title && <div className="text-3xl font-bold mb-8rem">{title}</div>}
         {children}
       </div>
     </>

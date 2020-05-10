@@ -1,25 +1,23 @@
 import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { AppContext } from 'App';
+import { Route, Redirect, useHistory, RouteProps } from 'react-router-dom';
+import { AuthContext } from 'App';
+import { Paths } from 'routes';
 
-const ProtectedRoute: React.FC = ({ children, ...rest }) => {
-  const { authorized } = useContext(AppContext);
+type Props = RouteProps;
 
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        authorized ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/signin',
-              state: { from: location },
-            }}
-          />
-        )
-      }
+const ProtectedRoute: React.FC<Props> = ({ children, ...props }) => {
+  const { authorized } = useContext(AuthContext);
+
+  const history = useHistory();
+
+  return authorized ? (
+    <Route {...props}>{children}</Route>
+  ) : (
+    <Redirect
+      to={{
+        pathname: Paths.SIGN_IN,
+        state: { from: history.location },
+      }}
     />
   );
 };
