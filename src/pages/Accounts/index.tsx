@@ -1,8 +1,9 @@
 import React from 'react';
+import { PageTemplate } from 'components/templates/PageTemplate';
 
 const Accounts: React.FC = () => {
   return (
-    <>
+    <PageTemplate title="Accounts">
       <div className="flex mb-4">
         <div className="p-1 border mr-2">МТБанк</div>
         <div className="p-1 border mr-2">Приорбанк</div>
@@ -26,7 +27,7 @@ const Accounts: React.FC = () => {
           </tr>
         </tbody>
       </table>
-    </>
+    </PageTemplate>
   );
 };
 

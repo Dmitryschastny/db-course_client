@@ -13,8 +13,8 @@ const PageTemplate: React.FC<Props> = ({ title, children }) => {
     <>
       {authorized && <Header />}
       <div className="p-10">
-        {title && <div className="text-3xl font-bold mb-8rem">{title}</div>}
-        {children}
+        {title && <div className="text-3xl font-bold mb-8">{title}</div>}
+        <div>{children}</div>
       </div>
     </>
   );
