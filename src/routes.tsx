@@ -12,7 +12,7 @@ type Route = {
   page: React.ComponentType;
 };
 
-enum Paths {
+export enum Paths {
   SIGN_IN = '/signin',
   SIGN_UP = '/signup',
   SETTINGS = '/settings',

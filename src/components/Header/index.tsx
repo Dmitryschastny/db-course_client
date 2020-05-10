@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
-import { Route, Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppContext } from 'App';
 import { routes } from 'routes';
 
 const Header: React.FC = () => {
+  const { onLogout } = useContext(AppContext);
+
   return (
     <div className="flex justify-between px-10 py-4">
       <ul className="flex">
@@ -15,7 +17,9 @@ const Header: React.FC = () => {
           ) : null
         )}
       </ul>
-      <button type="button">Logout</button>
+      <button type="button" onClick={onLogout}>
+        Logout
+      </button>
     </div>
   );
 };
