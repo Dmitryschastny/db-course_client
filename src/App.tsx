@@ -8,6 +8,7 @@ import { SignIn } from 'pages/SignIn';
 import { SignUp } from 'pages/SignUp';
 import { clients } from 'services/clients.config';
 import { ProtectedRoute } from 'components/ProtectedRoute';
+import { Settings } from 'pages/Settings';
 
 interface AppContext {
   authorized: boolean;
@@ -41,6 +42,9 @@ const App: React.FC = () => {
           </Route>
           <Route path="/signup">
             <SignUp />
+          </Route>
+          <Route path="/settings">
+            <Settings />
           </Route>
           <ProtectedRoute>
             <Route path="/transactions">
