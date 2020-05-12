@@ -2,7 +2,7 @@ import { Http, Response } from 'http/types';
 import { CrudService } from '../CrudService';
 import { SettingsResponse } from './types';
 
-export class LanguagesService extends CrudService {
+export class SettingsService extends CrudService {
   constructor(http: Http) {
     super('settings', http);
   }

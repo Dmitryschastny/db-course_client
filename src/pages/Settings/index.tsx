@@ -11,7 +11,7 @@ import { AppContext } from 'App';
 import { stringEntries, StringEntries } from './constants';
 
 const Settings: React.FC = () => {
-  const { language } = useContext(AppContext);
+  const { user, language } = useContext(AppContext);
 
   const [languages, setLanguages] = useState<Language[]>([]);
 
@@ -21,12 +21,6 @@ const Settings: React.FC = () => {
     clients.languages.getAll().then(({ data }) => setLanguages(data));
   }, []);
 
-  const languagesOptions = languages.map(l => (
-    <option key={l.id} value={l.id}>
-      {l.name}
-    </option>
-  ));
-
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
       usePin: false,
@@ -34,10 +28,18 @@ const Settings: React.FC = () => {
       mainCurrency: 0,
     },
     onSubmit: async values => {
-      console.log(values);
+      if (user) {
+        clients.users.update(user?.id, { settings: values });
+      }
     },
     enableReinitialize: true,
   };
+
+  const languagesOptions = languages.map(l => (
+    <option key={l.id} value={l.id}>
+      {l.name}
+    </option>
+  ));
 
   return (
     <PageTemplate title="Settings">
