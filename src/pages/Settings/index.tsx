@@ -8,23 +8,26 @@ import { useStrings } from 'hooks/useStrings';
 import { Language } from 'services/LanguagesService';
 import { Settings as FormikValues } from 'services/SettingsService';
 import { AppContext } from 'App';
+import { Currency } from 'services/CurrenciesService';
 import { stringEntries, StringEntries } from './constants';
 
 const Settings: React.FC = () => {
   const { user, language } = useContext(AppContext);
 
   const [languages, setLanguages] = useState<Language[]>([]);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   const strings = useStrings<StringEntries>(stringEntries);
 
   useEffect(() => {
     clients.languages.getAll().then(({ data }) => setLanguages(data));
+    clients.currencies.getAll().then(({ data }) => setCurrencies(data));
   }, []);
 
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
       usePin: false,
-      language: language?.id || 0,
+      languageId: language?.id || 0,
       mainCurrency: 0,
     },
     onSubmit: async values => {
@@ -41,6 +44,12 @@ const Settings: React.FC = () => {
     </option>
   ));
 
+  const currenciesOptions = currencies.map(c => (
+    <option key={c.id} value={c.id}>
+      {c.name} ({c.code})
+    </option>
+  ));
+
   return (
     <PageTemplate title="Settings">
       <div className="flex flex-col p-5 w-1/2">
@@ -50,12 +59,12 @@ const Settings: React.FC = () => {
               <FormikInput label="Use pin" type="checkbox" name="usePin" />
               {formik.values.usePin && <FormikInput label="Pin" name="pin" />}
 
-              <FormikSelect label="Language" name="language">
+              <FormikSelect label="Language" name="languageId">
                 {languagesOptions}
               </FormikSelect>
 
               <FormikSelect label="Main currency" name="mainCurrency">
-                <option value="0">BYN</option>
+                {currenciesOptions}
               </FormikSelect>
 
               <button className="mb-1 w-auto self-end" type="submit">
