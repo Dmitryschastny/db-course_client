@@ -16,7 +16,7 @@ type AuthContext = {
 };
 
 type AppContext = {
-  user: User;
+  user?: User;
   language?: Language;
 };
 
@@ -26,6 +26,7 @@ export const AppContext = React.createContext<AppContext>({} as AppContext);
 const App: React.FC = () => {
   const [authorized, setAuthorized] = useState(!!localStorage.getItem('token'));
   const [user, setUser] = useState<User>();
+  const [language, setLanguage] = useState<Language>();
 
   const verifyUser = async () => {
     const token = localStorage.getItem('token');
@@ -34,6 +35,7 @@ const App: React.FC = () => {
       const { data } = await clients.users.getByToken({ token });
 
       setUser(data.user);
+      setLanguage(data.language);
       setAuthorized(true);
     }
   };
@@ -50,15 +52,8 @@ const App: React.FC = () => {
     setAuthorized(false);
   };
 
-  const [settings, setSettings] = useState();
-  const [language, setLanguage] = useState<Language>();
-
   useEffect(() => {
     verifyUser();
-
-    clients.languages.getById(1).then(({ data }) => {
-      setLanguage(data);
-    });
   }, []);
 
   const routesContent = (
@@ -85,13 +80,9 @@ const App: React.FC = () => {
       <AuthContext.Provider
         value={{ authorized, onAuth: handleAuth, onLogout: handleLogout }}
       >
-        {user && authorized ? (
-          <AppContext.Provider value={{ user, language }}>
-            {routesContent}
-          </AppContext.Provider>
-        ) : (
-          routesContent
-        )}
+        <AppContext.Provider value={{ user, language }}>
+          {routesContent}
+        </AppContext.Provider>
       </AuthContext.Provider>
     </>
   );

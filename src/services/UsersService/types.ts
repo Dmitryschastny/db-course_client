@@ -1,3 +1,5 @@
+import { Language } from '../LanguagesService/types';
+
 export type Credentials = {
   email: string;
   password: string;
@@ -14,4 +16,6 @@ export type User = {
 
 export type MeResponse = {
   user: User;
+  language: Language;
+  // currency: string; // Currency code
 };
