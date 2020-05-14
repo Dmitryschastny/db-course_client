@@ -4,10 +4,11 @@ import { SignUp } from 'pages/SignUp';
 import { Settings } from 'pages/Settings';
 import { Accounts } from 'pages/Accounts';
 import { Transactions } from 'pages/Transactions';
+import { Languages } from 'services/LanguagesService';
 
 type Route = {
   path: string;
-  title?: string;
+  title?: Languages<string>;
   protected?: boolean;
   page: React.ComponentType;
 };
@@ -32,19 +33,28 @@ const routes: Route[] = [
   },
   {
     path: Paths.SETTINGS,
-    title: 'Settings',
+    title: {
+      en: 'Settings',
+      ru: 'Настройки',
+    },
     protected: true,
     page: Settings,
   },
   {
     path: Paths.ACCOUNTS,
-    title: 'Accounts',
+    title: {
+      en: 'Accounts',
+      ru: 'Аккаунты',
+    },
     protected: true,
     page: Accounts,
   },
   {
     path: Paths.TRANSACTIONS,
-    title: 'Transactions',
+    title: {
+      en: 'Transactions',
+      ru: 'Транзакции',
+    },
     protected: true,
     page: Transactions,
   },

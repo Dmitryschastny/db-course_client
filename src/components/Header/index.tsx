@@ -16,7 +16,9 @@ const Header: React.FC = () => {
         {routes.map(route =>
           route.title ? (
             <li className="mr-4" key={route.path}>
-              <Link to={route.path}>{route.title}</Link>
+              <Link to={route.path}>
+                {(route.title as any)[strings.getLanguage()]}
+              </Link>
             </li>
           ) : null
         )}
