@@ -39,11 +39,16 @@ const App: React.FC = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      const { data } = await clients.users.getByToken({ token });
+      try {
+        const { data } = await clients.users.getByToken({ token });
 
-      setUser(data.user);
-      setSettings(data.settings);
-      setAuthorized(true);
+        setUser(data.user);
+        setSettings(data.settings);
+        setAuthorized(true);
+      } catch (error) {
+        setAuthorized(false);
+        localStorage.removeItem('token');
+      }
     }
   };
 
