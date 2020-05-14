@@ -12,7 +12,7 @@ import { Currency } from 'services/CurrenciesService';
 import { stringEntries, StringEntries } from './constants';
 
 const Settings: React.FC = () => {
-  const { user, language } = useContext(AppContext);
+  const { user, settings, onSettingsUpdate } = useContext(AppContext);
 
   const [languages, setLanguages] = useState<Language[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
@@ -24,15 +24,31 @@ const Settings: React.FC = () => {
     clients.currencies.getAll().then(({ data }) => setCurrencies(data));
   }, []);
 
+  if (!settings) {
+    return null;
+  }
+
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
       usePin: false,
-      languageId: language?.id || 0,
-      mainCurrency: 0,
+      languageId: settings.language.id,
+      mainCurrencyId: settings.mainCurrency.id,
     },
     onSubmit: async values => {
       if (user) {
-        clients.users.update(user?.id, { settings: values });
+        const language = languages.find(l => l.id === +values.languageId);
+        const mainCurrency = currencies.find(
+          c => c.id === +values.mainCurrencyId
+        );
+
+        if (language && mainCurrency) {
+          await clients.users.update(user?.id, { settings: values });
+
+          onSettingsUpdate({
+            language,
+            mainCurrency,
+          });
+        }
       }
     },
     enableReinitialize: true,
@@ -63,7 +79,7 @@ const Settings: React.FC = () => {
                 {languagesOptions}
               </FormikSelect>
 
-              <FormikSelect label="Main currency" name="mainCurrency">
+              <FormikSelect label="Main currency" name="mainCurrencyId">
                 {currenciesOptions}
               </FormikSelect>
 

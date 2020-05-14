@@ -1,5 +1,6 @@
 import { Settings } from 'services/SettingsService';
-import { Language } from '../LanguagesService/types';
+import { Currency } from '../CurrenciesService';
+import { Language } from '../LanguagesService';
 
 export type Credentials = {
   email: string;
@@ -17,8 +18,10 @@ export type User = {
 
 export type MeResponse = {
   user: User;
-  language: Language;
-  // currency: string; // Currency code
+  settings: {
+    language: Language;
+    mainCurrency: Currency;
+  };
 };
 
 export type UpdateRequest = {

@@ -1,8 +1,8 @@
 export type Settings = {
   usePin: boolean;
   pin?: number;
-  language: number;
-  mainCurrency: number;
+  languageId: number;
+  mainCurrencyId: number;
 };
 
 export type SettingsResponse = Settings;

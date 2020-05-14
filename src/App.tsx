@@ -8,6 +8,7 @@ import { routes } from 'routes';
 import { User } from 'services/UsersService';
 import { NoMath } from 'pages/NoMath';
 import { Language } from 'services/LanguagesService';
+import { Currency } from 'services/CurrenciesService';
 
 type AuthContext = {
   authorized: boolean;
@@ -15,9 +16,15 @@ type AuthContext = {
   onLogout(): void;
 };
 
+type SettingsState = {
+  language: Language;
+  mainCurrency: Currency;
+};
+
 type AppContext = {
   user?: User;
-  language?: Language;
+  settings?: SettingsState;
+  onSettingsUpdate(s: SettingsState): void;
 };
 
 export const AuthContext = React.createContext<AuthContext>({} as AuthContext);
@@ -26,7 +33,7 @@ export const AppContext = React.createContext<AppContext>({} as AppContext);
 const App: React.FC = () => {
   const [authorized, setAuthorized] = useState(!!localStorage.getItem('token'));
   const [user, setUser] = useState<User>();
-  const [language, setLanguage] = useState<Language>();
+  const [settings, setSettings] = useState<SettingsState>();
 
   const verifyUser = async () => {
     const token = localStorage.getItem('token');
@@ -35,9 +42,13 @@ const App: React.FC = () => {
       const { data } = await clients.users.getByToken({ token });
 
       setUser(data.user);
-      setLanguage(data.language);
+      setSettings(data.settings);
       setAuthorized(true);
     }
+  };
+
+  const handleSettingsUpdate = (s: SettingsState) => {
+    setSettings(s);
   };
 
   const handleAuth = (token: string) => {
@@ -80,7 +91,9 @@ const App: React.FC = () => {
       <AuthContext.Provider
         value={{ authorized, onAuth: handleAuth, onLogout: handleLogout }}
       >
-        <AppContext.Provider value={{ user, language }}>
+        <AppContext.Provider
+          value={{ user, settings, onSettingsUpdate: handleSettingsUpdate }}
+        >
           {routesContent}
         </AppContext.Provider>
       </AuthContext.Provider>
