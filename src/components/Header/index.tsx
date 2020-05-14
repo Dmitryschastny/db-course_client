@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthContext } from 'App';
-import { routes } from 'routes';
 import { useStrings } from 'hooks/useStrings';
+import { Navigation } from 'components/Navigation';
 import { StringEntries, stringEntries } from './constants';
 
 const Header: React.FC = () => {
@@ -11,21 +10,15 @@ const Header: React.FC = () => {
   const strings = useStrings<StringEntries>(stringEntries);
 
   return (
-    <div className="flex justify-between px-10 py-4">
-      <ul className="flex">
-        {routes.map(route =>
-          route.title ? (
-            <li className="mr-4" key={route.path}>
-              <Link to={route.path}>
-                {(route.title as any)[strings.getLanguage()]}
-              </Link>
-            </li>
-          ) : null
-        )}
-      </ul>
-      <button type="button" onClick={onLogout}>
-        {strings.logout}
-      </button>
+    <div className="px-10 pt-4">
+      <div className="flex justify-between mb-4">
+        <Navigation />
+        <button type="button" onClick={onLogout}>
+          {strings.logout}
+        </button>
+      </div>
+      <div className="text-xl font-bold">275 BYN</div>
+      <div className="text-sm text-grey">Balance</div>
     </div>
   );
 };

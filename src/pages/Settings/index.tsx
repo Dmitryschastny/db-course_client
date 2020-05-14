@@ -68,7 +68,7 @@ const Settings: React.FC = () => {
 
   return (
     <PageTemplate title="Settings">
-      <div className="flex flex-col p-5 w-1/2">
+      <div className="flex flex-col p-5 md:w-1/2">
         <Formik {...formikConfig}>
           {formik => (
             <Form className="flex flex-col">
