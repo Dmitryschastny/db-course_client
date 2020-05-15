@@ -9,9 +9,11 @@ import { FormTemplate } from 'components/templates/FormTemplate';
 import { FormikNumberInput } from 'components/FormikNumberInput';
 import { Currency } from 'services/CurrenciesService';
 import * as yup from 'yup';
+import { FormikInput } from 'components/FormikInput';
 import { stringEntries, StringEntries } from './constants';
 
 interface FormikValues {
+  name: string;
   accountTypeId: number;
   currencyId: number;
   bankId?: number;
@@ -36,6 +38,7 @@ const AddAccountForm: React.FC = () => {
 
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
+      name: '',
       accountTypeId: 1,
       currencyId: 1,
     },
@@ -60,6 +63,7 @@ const AddAccountForm: React.FC = () => {
     },
     enableReinitialize: true,
     validationSchema: yup.object().shape({
+      name: yup.string().required('Required'),
       cardNumber: yup.string().when(['accountTypeId'], {
         is: accountTypeId => +accountTypeId === 2,
         then: yup
@@ -109,6 +113,8 @@ const AddAccountForm: React.FC = () => {
 
         return (
           <>
+            <FormikInput name="name" label="Account name" />
+
             <FormikSelect label={strings.accountType} name="accountTypeId">
               {accountTypeOptions}
             </FormikSelect>
