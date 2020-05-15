@@ -23,6 +23,9 @@ const AddAccountForm: React.FC = () => {
   const [accountTypes, setAccountTypes] = useState<AccountType[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState(false);
+
   useEffect(() => {
     clients.banks.getAll().then(({ data }) => setBanks(data));
     clients.accountTypes.getAll().then(({ data }) => setAccountTypes(data));
@@ -37,7 +40,23 @@ const AddAccountForm: React.FC = () => {
       currencyId: 1,
     },
     onSubmit: async values => {
-      console.log(values);
+      try {
+        const { status } = await clients.accounts.create({
+          ...values,
+          accountTypeId: +values.accountTypeId,
+          currencyId: +values.currencyId,
+          bankId: values.bankId ? values.bankId : undefined,
+        });
+
+        if (status === 200) {
+          setError(false);
+          setDone(true);
+        }
+      } catch (e) {
+        const { status } = e.response;
+
+        setError(true);
+      }
     },
     enableReinitialize: true,
     validationSchema: yup.object().shape({
@@ -69,7 +88,7 @@ const AddAccountForm: React.FC = () => {
     </option>
   ));
 
-  return (
+  const form = (
     <FormTemplate {...formikConfig}>
       {formik => {
         const cardFields = (
@@ -88,7 +107,6 @@ const AddAccountForm: React.FC = () => {
           </>
         );
 
-        console.log(formik)
         return (
           <>
             <FormikSelect label={strings.accountType} name="accountTypeId">
@@ -104,11 +122,19 @@ const AddAccountForm: React.FC = () => {
             <button className="mb-1 w-auto self-end" type="submit">
               {strings.add}
             </button>
+
+            {error && (
+              <div className="m-2 text-center text-red-600">
+                {strings.error}
+              </div>
+            )}
           </>
         );
       }}
     </FormTemplate>
   );
+
+  return done ? <div>{strings.done}</div> : form;
 };
 
 export { AddAccountForm };

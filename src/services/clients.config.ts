@@ -1,4 +1,5 @@
 import { http } from 'http/http.config';
+import { AccountsService } from './AccountsService/index';
 import { UsersService } from './UsersService';
 import { LanguagesService } from './LanguagesService';
 import { CurrenciesService } from './CurrenciesService';
@@ -13,4 +14,5 @@ export const clients = {
   currencies: new CurrenciesService(http),
   users: new UsersService(http),
   accountTypes: new AccountTypesService(http),
+  accounts: new AccountsService(http),
 };
