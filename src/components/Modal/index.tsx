@@ -31,7 +31,9 @@ const Modal: React.FC<Props> = ({ content, children }) => {
         }}
       >
         <div className="flex justify-between">
-          {typeof content === 'function' ? content(toggle) : content}
+          <div className="flex flex-col items-center w-full">
+            {typeof content === 'function' ? content(toggle) : content}
+          </div>
           <button className="self-start" type="button" onClick={() => toggle()}>
             ×
           </button>
