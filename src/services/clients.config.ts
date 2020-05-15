@@ -4,6 +4,7 @@ import { LanguagesService } from './LanguagesService';
 import { CurrenciesService } from './CurrenciesService';
 import { BanksService } from './BanksService';
 import { CountriesService } from './CountriesService';
+import { AccountTypesService } from './AccountTypesService';
 
 export const clients = {
   banks: new BanksService(http),
@@ -11,4 +12,5 @@ export const clients = {
   languages: new LanguagesService(http),
   currencies: new CurrenciesService(http),
   users: new UsersService(http),
+  accountTypes: new AccountTypesService(http),
 };

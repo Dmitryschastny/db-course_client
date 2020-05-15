@@ -89,9 +89,6 @@ const Settings: React.FC = () => {
             </Form>
           )}
         </Formik>
-        {/* {requestError && (
-            <div className="m-2 text-center text-red-600">{requestError}</div>
-          )} */}
       </div>
     </PageTemplate>
   );
