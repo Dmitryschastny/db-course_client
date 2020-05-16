@@ -4,9 +4,10 @@ import { Field, ErrorMessage } from 'formik';
 interface Props {
   label: string;
   name: string;
+  icon?: string;
 }
 
-const FormikSelect: React.FC<Props> = ({ label, name, children }) => {
+const FormikSelect: React.FC<Props> = ({ label, name, icon, children }) => {
   return (
     <div className="flex justify-between mb-6">
       <label className="w-full mr-5" htmlFor={name}>
@@ -19,9 +20,12 @@ const FormikSelect: React.FC<Props> = ({ label, name, children }) => {
         >
           <ErrorMessage name={name} />
         </div>
-        <Field id={name} name={name} as="select">
-          {children}
-        </Field>
+        <div className="flex">
+          {icon && <i className="material-icons">{icon}</i>}
+          <Field id={name} name={name} as="select">
+            {children}
+          </Field>
+        </div>
       </div>
     </div>
   );

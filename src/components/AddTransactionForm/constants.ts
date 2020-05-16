@@ -7,7 +7,12 @@ export interface StringEntries {
     transactionType: string;
     account: string;
     date: string;
+    category: string;
+    note: string;
+    place: string;
   };
+  done: string;
+  error: string;
 }
 
 export const stringEntries: Languages<StringEntries> = {
@@ -18,7 +23,12 @@ export const stringEntries: Languages<StringEntries> = {
       transactionType: 'Transaction type',
       account: 'Account',
       date: 'Date',
+      category: 'Category',
+      note: 'Note',
+      place: 'Place',
     },
+    done: 'Transactions has been added',
+    error: 'Something went wrong',
   },
   ru: {
     add: 'Добавить',
@@ -27,6 +37,11 @@ export const stringEntries: Languages<StringEntries> = {
       transactionType: 'Тип транзакции',
       account: 'Аккаунт',
       date: 'Дата',
+      category: 'Категория',
+      note: 'Заметка',
+      place: 'Место',
     },
+    done: 'Транзакция была добавлена',
+    error: 'Произошла ошибка',
   },
 };
