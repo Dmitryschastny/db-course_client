@@ -7,17 +7,21 @@ import { clients } from 'services/clients.config';
 import { AppContext } from 'App';
 
 const Transactions: React.FC = () => {
-  const { settings } = useContext(AppContext);
+  const { accounts, settings } = useContext(AppContext);
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    clients.transactions.getAll().then(({ data }) => {
-      setTransactions(data);
+    if (accounts.length) {
+      clients.transactions.getAll().then(({ data }) => {
+        setTransactions(data);
+        setLoading(false);
+      });
+    } else {
       setLoading(false);
-    });
+    }
   }, []);
 
   let lastDate = transactions.length

@@ -28,8 +28,6 @@ const AddTransactionForm: React.FC = () => {
   const [done, setDone] = useState(false);
   const [error, setError] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     Promise.all([
       clients.transactionTypes.getAll(),
@@ -37,13 +35,12 @@ const AddTransactionForm: React.FC = () => {
     ]).then(([{ data: transactionsData }, { data: categoriesData }]) => {
       setTransactionTypes(transactionsData);
       setCategories(categoriesData as CategoriesResponse);
-      setLoading(false);
     });
   }, []);
 
   const strings = useStrings<StringEntries>(stringEntries);
 
-  if (!accounts.length && !loading) {
+  if (!accounts.length) {
     return (
       <div>You don&apos;t have any accounts, please add an account first.</div>
     );
