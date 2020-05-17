@@ -5,6 +5,7 @@ import { AddTransactionForm } from 'components/AddTransactionForm';
 import { Transaction } from 'services/TransactionsService';
 import { clients } from 'services/clients.config';
 import { AppContext } from 'App';
+import { EditTransactionForm } from 'components/EditTransactionForm';
 
 const Transactions: React.FC = () => {
   const { accounts, settings } = useContext(AppContext);
@@ -23,6 +24,21 @@ const Transactions: React.FC = () => {
       setLoading(false);
     }
   }, []);
+
+  const handleTransactionEdit = (transaction: Transaction) => {
+    const updatedTransaction = [...transactions];
+    const transactionIndex = updatedTransaction.findIndex(
+      t => t.id === transaction.id
+    );
+
+    updatedTransaction[transactionIndex] = transaction;
+
+    setTransactions(updatedTransaction);
+  };
+
+  const handleTransactionAdd = (transaction: Transaction) => {
+    setTransactions([...transactions, transaction]);
+  };
 
   let lastDate = transactions.length
     ? new Date(transactions[0].date)
@@ -62,7 +78,26 @@ const Transactions: React.FC = () => {
         )}
         <tr>
           <td>
-            <Modal content={null}>
+            <Modal
+              content={toggle => (
+                <EditTransactionForm
+                  id={t.id}
+                  initialValues={{
+                    amount: t.amount,
+                    typeId: t.type.id,
+                    accountId: t.account.id,
+                    date: +new Date(t.date),
+                    note: t.note,
+                    categoryId: t.category?.id,
+                    place: t.place?.name,
+                  }}
+                  onEdit={transaction => {
+                    handleTransactionEdit(transaction);
+                    toggle();
+                  }}
+                />
+              )}
+            >
               {toggle => (
                 <div className="flex action-item p-2" onClick={() => toggle()}>
                   <div
@@ -98,7 +133,16 @@ const Transactions: React.FC = () => {
   const pageContent = (
     <>
       <div className="flex items-center mb-2 justify-between">
-        <Modal content={<AddTransactionForm />}>
+        <Modal
+          content={toggle => (
+            <AddTransactionForm
+              onAdd={transaction => {
+                handleTransactionAdd(transaction);
+                toggle();
+              }}
+            />
+          )}
+        >
           {toggle => (
             <>
               <div className="ext-lg font-bold">Transactions</div>

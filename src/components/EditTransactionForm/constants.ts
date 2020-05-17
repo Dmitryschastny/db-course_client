@@ -11,6 +11,7 @@ export interface StringEntries {
     note: string;
     place: string;
   };
+  done: string;
   error: string;
 }
 
@@ -26,6 +27,7 @@ export const stringEntries: Languages<StringEntries> = {
       note: 'Note',
       place: 'Place',
     },
+    done: 'Transactions has been added',
     error: 'Something went wrong',
   },
   ru: {
@@ -39,6 +41,7 @@ export const stringEntries: Languages<StringEntries> = {
       note: 'Заметка',
       place: 'Место',
     },
+    done: 'Транзакция была добавлена',
     error: 'Произошла ошибка',
   },
 };

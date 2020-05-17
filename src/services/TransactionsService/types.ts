@@ -1,3 +1,4 @@
+import { Account } from 'services/AccountsService';
 import { Place } from 'services/PlacesService';
 import { TransactionType } from '../TransactionTypesService/types';
 import { Category } from '../CategoriesService/types';
@@ -17,7 +18,7 @@ export type Transaction = {
   amount: number;
   note?: string;
   date: number;
-  account: Account[];
+  account: Account;
   category?: Category;
   // currency
   place: Place;

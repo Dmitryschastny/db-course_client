@@ -1,13 +1,17 @@
 import { Http, Response } from 'http/types';
 import { CrudService } from '../CrudService';
-import { CreateTransactionRequest, TransactionsResponse } from './types';
+import {
+  CreateTransactionRequest,
+  TransactionsResponse,
+  Transaction,
+} from './types';
 
 export class TransactionsService extends CrudService {
   constructor(http: Http) {
     super('transactions', http);
   }
 
-  create(data: CreateTransactionRequest): Promise<Response<any>> {
+  create(data: CreateTransactionRequest): Promise<Response<Transaction>> {
     return this.http.post(this.path, data);
   }
 

@@ -21,10 +21,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 type FormikValues = CreateTransactionRequest;
 
 interface Props {
-  onAdd(transaction: Transaction): void;
+  id: number;
+  initialValues: FormikValues;
+  onEdit(transaction: Transaction): void;
 }
 
-const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
+const EditTransactionForm: React.FC<Props> = ({ id, initialValues }) => {
   const { settings, accounts } = useContext(AppContext);
 
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>(
@@ -53,15 +55,10 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
   }
 
   const formikConfig: FormikConfig<FormikValues> = {
-    initialValues: {
-      accountId: accounts.length ? accounts[0].id : 0,
-      typeId: 1,
-      amount: 0,
-      date: Date.now(),
-    },
+    initialValues,
     onSubmit: async values => {
       try {
-        const { status, data } = await clients.transactions.create({
+        const { status } = await clients.transactions.create({
           ...values,
           typeId: +values.typeId,
           accountId: +values.accountId,
@@ -70,7 +67,6 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
 
         if (status === 200) {
           setError(false);
-          onAdd(data);
         }
       } catch (e) {
         const { status } = e.response;
@@ -184,4 +180,4 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
   );
 };
 
-export { AddTransactionForm };
+export { EditTransactionForm };
