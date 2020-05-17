@@ -53,23 +53,29 @@ const Transactions: React.FC = () => {
         )}
         <tr>
           <td>
-            <div className="flex action-item p-2">
-              <div
-                className="flex flex-shrink-0 items-center 
+            <Modal content={null}>
+              {toggle => (
+                <div className="flex action-item p-2" onClick={() => toggle()}>
+                  <div
+                    className="flex flex-shrink-0 items-center 
                     justify-center rounded-full overflow-hidden h-12 w-12 border-solid border-2 border-black"
-              >
-                <i className="material-icons text-4xl">
-                  {t.category?.icon.name}
-                </i>
-              </div>
-              <div className="flex justify-between px-4 w-full">
-                <div>
-                  <div className="text-lg font-bold">{t.category?.name}</div>
-                  <div className="text-gray-600">{t.type.name}</div>
+                  >
+                    <i className="material-icons text-4xl">
+                      {t.category?.icon.name}
+                    </i>
+                  </div>
+                  <div className="flex justify-between px-4 w-full">
+                    <div>
+                      <div className="text-lg font-bold">
+                        {t.category?.name}
+                      </div>
+                      <div className="text-gray-600">{t.type.name}</div>
+                    </div>
+                    <div>{t.amount} BYN</div>
+                  </div>
                 </div>
-                <div>{t.amount} BYN</div>
-              </div>
-            </div>
+              )}
+            </Modal>
           </td>
         </tr>
       </>

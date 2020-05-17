@@ -13,17 +13,21 @@ const Accounts: React.FC = () => {
     return (
       <tr>
         <td className="pb-2">
-          <div className="flex action-item">
-            <div className="flex flex-shrink-0 items-center justify-center rounded-full overflow-hidden h-12 w-12">
-              <i className="material-icons text-4xl">{icon}</i>
-            </div>
-            <div className="flex items-center justify-between px-4 w-full">
-              <div className="text-lg font-bold">{a.name}</div>
-              <div>
-                {a.balance} {a.currency.code}
+          <Modal content={null}>
+            {toggle => (
+              <div className="flex action-item" onClick={() => toggle()}>
+                <div className="flex flex-shrink-0 items-center justify-center rounded-full overflow-hidden h-12 w-12">
+                  <i className="material-icons text-4xl">{icon}</i>
+                </div>
+                <div className="flex items-center justify-between px-4 w-full">
+                  <div className="text-lg font-bold">{a.name}</div>
+                  <div>
+                    {a.balance} {a.currency.code}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </Modal>
         </td>
       </tr>
     );

@@ -69,6 +69,8 @@ const App: React.FC = () => {
       } finally {
         setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   };
 
