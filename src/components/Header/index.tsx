@@ -15,6 +15,7 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   const settingsRoute = routes.find(r => r.path === Paths.SETTINGS);
+  const settingsActive = location.pathname === Paths.SETTINGS;
 
   return (
     <div className="px-10 pt-4">
@@ -24,16 +25,20 @@ const Header: React.FC = () => {
           <button className="mr-4" type="button" onClick={onLogout}>
             {strings.logout}
           </button>
-          <Link
-            to={settingsRoute?.path || ''}
-            className={
-              location.pathname === Paths.SETTINGS ? 'text-red-600' : ''
-            }
-          >
-            <i className="material-icons text-3xl align-middle">
+          {settingsActive ? (
+            <i
+              className="material-icons text-3xl align-middle"
+              style={{ color: '#2196f3' }}
+            >
               {settingsRoute?.icon}
             </i>
-          </Link>
+          ) : (
+            <Link to={settingsRoute?.path || ''}>
+              <i className="material-icons text-3xl align-middle">
+                {settingsRoute?.icon}
+              </i>
+            </Link>
+          )}
         </div>
       </div>
       <div className="text-xl font-bold">275 BYN</div>

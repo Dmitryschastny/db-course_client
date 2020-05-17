@@ -11,19 +11,22 @@ const Navigation: React.FC = () => {
   let routesElements: React.ReactNode = [];
   if (lang) {
     routesElements = routes.map(route => {
-      if (route.path === Paths.SETTINGS) {
+      if (route.path === Paths.SETTINGS || !route.title) {
         return null;
       }
 
       const active = location.pathname === route.path;
+      const title = (route.title as any)[lang];
 
-      return route.title ? (
+      return (
         <li className="mr-4" key={route.path}>
-          <Link to={route.path} className={active ? 'text-red-600' : ''}>
-            {(route.title as any)[lang]}
-          </Link>
+          {active ? (
+            <span style={{ color: '#2196f3' }}>{title}</span>
+          ) : (
+            <Link to={route.path}>{title}</Link>
+          )}
         </li>
-      ) : null;
+      );
     });
   }
 
