@@ -15,6 +15,7 @@ import {
   CreateTransactionRequest,
   Transaction,
 } from 'services/TransactionsService';
+import * as yup from 'yup';
 import { StringEntries, stringEntries } from './constants';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -78,6 +79,12 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
         setError(true);
       }
     },
+    validationSchema: yup.object().shape({
+      amount: yup
+        .number()
+        .moreThan(0, 'Value must be positive')
+        .required('Required'),
+    }),
     enableReinitialize: true,
   };
 
@@ -123,6 +130,7 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
         return (
           <>
             <FormikNumberInput
+              allowNegative={false}
               formik={formik}
               name="amount"
               label={strings.fields.amount}
