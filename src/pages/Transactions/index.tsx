@@ -52,8 +52,8 @@ const Transactions: React.FC = () => {
           </tr>
         )}
         <tr>
-          <td className="pb-2">
-            <div className="flex">
+          <td>
+            <div className="flex action-item p-2">
               <div
                 className="flex flex-shrink-0 items-center 
                     justify-center rounded-full overflow-hidden h-12 w-12 border-solid border-2 border-black"

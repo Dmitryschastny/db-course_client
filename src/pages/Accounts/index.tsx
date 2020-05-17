@@ -7,16 +7,27 @@ import { AppContext } from 'App';
 const Accounts: React.FC = () => {
   const { accounts } = useContext(AppContext);
 
-  const accountsRows = accounts.map(a => (
-    <tr>
-      <td>
-        {a.name} ({a.type.name})
-      </td>
-      <td className="text-right">
-        {a.balance} {a.currency.code}
-      </td>
-    </tr>
-  ));
+  const accountsRows = accounts.map(a => {
+    const icon = a.type.id === 1 ? 'account_balance_wallet' : 'credit_card';
+
+    return (
+      <tr>
+        <td className="pb-2">
+          <div className="flex action-item">
+            <div className="flex flex-shrink-0 items-center justify-center rounded-full overflow-hidden h-12 w-12">
+              <i className="material-icons text-4xl">{icon}</i>
+            </div>
+            <div className="flex items-center justify-between px-4 w-full">
+              <div className="text-lg font-bold">{a.name}</div>
+              <div>
+                {a.balance} {a.currency.code}
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <PageTemplate title="Accounts">

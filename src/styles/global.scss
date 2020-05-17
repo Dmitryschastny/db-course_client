@@ -36,6 +36,15 @@ input {
 
 button {
   padding: 0 1rem;
+
+  &:hover {
+    color: #2196f3;
+    border-color: #2196f3;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 a {
@@ -43,5 +52,12 @@ a {
 
   &:hover {
     color: #2196f3;
+  }
+}
+
+.action-item {
+  &:hover {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
   }
 }
