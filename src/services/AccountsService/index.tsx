@@ -4,6 +4,8 @@ import {
   CreateAccountRequest,
   AccountsResponse,
   CreateAccountResponse,
+  UpdateAccountResponse,
+  UpdateAccountRequest,
 } from './types';
 
 export class AccountsService extends CrudService {
@@ -13,6 +15,13 @@ export class AccountsService extends CrudService {
 
   create(data: CreateAccountRequest): Promise<Response<CreateAccountResponse>> {
     return this.http.post(this.path, data);
+  }
+
+  update(
+    id: number,
+    data: UpdateAccountRequest
+  ): Promise<Response<UpdateAccountResponse>> {
+    return this.http.put(`${this.path}/${id}`, data);
   }
 
   /**

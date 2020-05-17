@@ -15,6 +15,7 @@ import { stringEntries, StringEntries } from './constants';
 
 interface FormikValues {
   name?: string;
+  balance: number;
   accountTypeId: number;
   currencyId: number;
   bankId?: number;
@@ -24,9 +25,10 @@ interface FormikValues {
 interface Props {
   id: number;
   initialValues: FormikValues;
+  onEdit?(): void;
 }
 
-const EditAccountForm: React.FC<Props> = ({ id, initialValues }) => {
+const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
   const { accounts, onAccountsUpdate } = useContext(AppContext);
 
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -55,6 +57,10 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues }) => {
         ];
 
         onAccountsUpdate(updatedAccounts);
+
+        if (onEdit) {
+          onEdit();
+        }
       }
     } catch (error) {
       setErrorMessage(strings.error);
@@ -65,15 +71,23 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues }) => {
     initialValues,
     onSubmit: async values => {
       try {
-        const { status } = await clients.accounts.create({
+        const { status, data } = await clients.accounts.update(id, {
           ...values,
           accountTypeId: +values.accountTypeId,
           currencyId: +values.currencyId,
-          bankId: values.bankId ? values.bankId : undefined,
+          bankId: values.bankId ? +values.bankId : undefined,
         });
 
         if (status === 200) {
-          setErrorMessage('');
+          const accountIndex = accounts.findIndex(a => a.id === id);
+          const updatedAccounts = [...accounts];
+          updatedAccounts[accountIndex] = data;
+
+          onAccountsUpdate(updatedAccounts);
+
+          if (onEdit) {
+            onEdit();
+          }
         }
       } catch (e) {
         const { status } = e.response;
@@ -91,6 +105,7 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues }) => {
           .length(16, 'Invalid input')
           .required('Required'),
       }),
+      balance: yup.number().required('Required'),
     }),
   };
 
@@ -134,6 +149,8 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues }) => {
         return (
           <>
             <FormikInput name="name" label="Account name" />
+
+            <FormikNumberInput formik={formik} name="balance" label="Balance" />
 
             <FormikSelect label={strings.accountType} name="accountTypeId">
               {accountTypeOptions}

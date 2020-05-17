@@ -22,3 +22,6 @@ export type CreateAccountRequest = {
 };
 
 export type CreateAccountResponse = Account;
+
+export type UpdateAccountRequest = CreateAccountRequest;
+export type UpdateAccountResponse = Account;

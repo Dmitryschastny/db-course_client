@@ -54,7 +54,7 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
           ...values,
           accountTypeId: +values.accountTypeId,
           currencyId: +values.currencyId,
-          bankId: values.bankId ? values.bankId : undefined,
+          bankId: values.bankId ? +values.bankId : undefined,
         });
 
         if (status === 200) {

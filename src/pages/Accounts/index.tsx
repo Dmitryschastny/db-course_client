@@ -23,18 +23,20 @@ const Accounts: React.FC = () => {
       <tr>
         <td className="pb-2">
           <Modal
-            content={
+            content={toggle => (
               <EditAccountForm
+                onEdit={toggle}
                 id={a.id}
                 initialValues={{
                   name: a.name,
+                  balance: a.balance,
                   accountTypeId: a.type.id,
                   currencyId: a.currency.id,
                   bankId: a.card?.bank.id,
                   cardNumber: a.card ? +a.card.number : undefined,
                 }}
               />
-            }
+            )}
           >
             {toggle => (
               <div className="flex action-item" onClick={() => toggle()}>
