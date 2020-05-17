@@ -4,11 +4,19 @@ import { AddAccountForm } from 'components/AddAccountForm';
 import { Modal } from 'components/Modal';
 import { AppContext } from 'App';
 
+const formatCardNumber = (number: string): string => {
+  const firstPart = number.slice(0, 4);
+  const lastPart = number.slice(12);
+
+  return `${firstPart} #### #### ${lastPart}`;
+};
+
 const Accounts: React.FC = () => {
   const { accounts } = useContext(AppContext);
 
   const accountsRows = accounts.map(a => {
-    const icon = a.type.id === 1 ? 'account_balance_wallet' : 'credit_card';
+    const card = a.type.id === 2;
+    const icon = card ? 'credit_card' : 'account_balance_wallet';
 
     return (
       <tr>
@@ -20,7 +28,15 @@ const Accounts: React.FC = () => {
                   <i className="material-icons text-4xl">{icon}</i>
                 </div>
                 <div className="flex items-center justify-between px-4 w-full">
-                  <div className="text-lg font-bold">{a.name}</div>
+                  <div className="text-lg font-bold">
+                    <div>{a.name}</div>
+                    {a.card && (
+                      <div className="text-sm font-normal">
+                        {a.card.bank.name}
+                        <div>{formatCardNumber(a.card.number)}</div>
+                      </div>
+                    )}
+                  </div>
                   <div>
                     {a.balance} {a.currency.code}
                   </div>

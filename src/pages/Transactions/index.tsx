@@ -42,6 +42,11 @@ const Transactions: React.FC = () => {
       day: 'numeric',
     });
 
+    const minus = t.type.id === 1;
+    const plus = t.type.id === 2;
+    let amountClass = minus ? 'text-red-600' : '';
+    amountClass = plus ? 'text-green-600' : amountClass;
+
     return (
       <>
         {showDate && (
@@ -71,7 +76,11 @@ const Transactions: React.FC = () => {
                       </div>
                       <div className="text-gray-600">{t.type.name}</div>
                     </div>
-                    <div>{t.amount} BYN</div>
+                    <div className={amountClass}>
+                      {minus && '-'}
+                      {plus && '+'}
+                      {t.amount} BYN
+                    </div>
                   </div>
                 </div>
               )}

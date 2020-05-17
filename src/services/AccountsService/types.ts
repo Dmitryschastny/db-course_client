@@ -1,3 +1,4 @@
+import { Card } from '../CardsService/types';
 import { AccountType } from '../AccountTypesService/types';
 import { Currency } from '../CurrenciesService/types';
 
@@ -6,7 +7,7 @@ export type Account = {
   name?: string;
   balance: number;
   archived: boolean;
-  card: any | null;
+  card?: Card;
   currency: Currency;
   type: AccountType;
 };
