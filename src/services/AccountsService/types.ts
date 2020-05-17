@@ -6,7 +6,6 @@ export type Account = {
   id: number;
   name?: string;
   balance: number;
-  archived: boolean;
   card?: Card;
   currency: Currency;
   type: AccountType;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Formik, FormikConfig, Form } from 'formik';
 import { clients } from 'services/clients.config';
-import { FormikInput } from 'components/FormikInput';
 import { PageTemplate } from 'components/templates/PageTemplate';
 import { FormikSelect } from 'components/FormikSelect';
 import { useStrings } from 'hooks/useStrings';
@@ -26,7 +25,6 @@ const Settings: React.FC = () => {
 
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
-      usePin: false,
       languageId: settings.language.id,
       mainCurrencyId: settings.mainCurrency.id,
     },
@@ -66,9 +64,6 @@ const Settings: React.FC = () => {
         <Formik {...formikConfig}>
           {formik => (
             <Form className="flex flex-col">
-              <FormikInput label="Use pin" type="checkbox" name="usePin" />
-              {formik.values.usePin && <FormikInput label="Pin" name="pin" />}
-
               <FormikSelect label="Language" name="languageId">
                 {languagesOptions}
               </FormikSelect>
