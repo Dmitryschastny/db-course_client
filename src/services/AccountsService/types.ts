@@ -20,3 +20,5 @@ export type CreateAccountRequest = {
   bankId?: number;
   cardNumber?: number;
 };
+
+export type CreateAccountResponse = Account;

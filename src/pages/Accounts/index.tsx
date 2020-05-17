@@ -3,10 +3,11 @@ import { PageTemplate } from 'components/templates/PageTemplate';
 import { AddAccountForm } from 'components/AddAccountForm';
 import { Modal } from 'components/Modal';
 import { AppContext } from 'App';
+import { EditAccountForm } from 'components/EditAccountForm';
 
-const formatCardNumber = (number: string): string => {
-  const firstPart = number.slice(0, 4);
-  const lastPart = number.slice(12);
+const formatCardNumber = (number: string | number): string => {
+  const firstPart = number.toString().slice(0, 4);
+  const lastPart = number.toString().slice(12);
 
   return `${firstPart} #### #### ${lastPart}`;
 };
@@ -21,7 +22,20 @@ const Accounts: React.FC = () => {
     return (
       <tr>
         <td className="pb-2">
-          <Modal content={null}>
+          <Modal
+            content={
+              <EditAccountForm
+                id={a.id}
+                initialValues={{
+                  name: a.name,
+                  accountTypeId: a.type.id,
+                  currencyId: a.currency.id,
+                  bankId: a.card?.bank.id,
+                  cardNumber: a.card ? +a.card.number : undefined,
+                }}
+              />
+            }
+          >
             {toggle => (
               <div className="flex action-item" onClick={() => toggle()}>
                 <div className="flex flex-shrink-0 items-center justify-center rounded-full overflow-hidden h-12 w-12">
@@ -53,7 +67,7 @@ const Accounts: React.FC = () => {
     <PageTemplate title="Accounts">
       <div className="flex flex-col md:w-1/2">
         <div className="flex items-center mb-2 justify-between">
-          <Modal content={<AddAccountForm />}>
+          <Modal content={toggle => <AddAccountForm onAdd={toggle} />}>
             {toggle => (
               <>
                 <div className=" text-lg font-bold">Accounts</div>

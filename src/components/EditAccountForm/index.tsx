@@ -14,7 +14,7 @@ import { AppContext } from 'App';
 import { stringEntries, StringEntries } from './constants';
 
 interface FormikValues {
-  name: string;
+  name?: string;
   accountTypeId: number;
   currencyId: number;
   bankId?: number;
@@ -22,17 +22,18 @@ interface FormikValues {
 }
 
 interface Props {
-  onAdd?(): void;
+  id: number;
+  initialValues: FormikValues;
 }
 
-const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
+const EditAccountForm: React.FC<Props> = ({ id, initialValues }) => {
   const { accounts, onAccountsUpdate } = useContext(AppContext);
 
   const [banks, setBanks] = useState<Bank[]>([]);
   const [accountTypes, setAccountTypes] = useState<AccountType[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     clients.banks.getAll().then(({ data }) => setBanks(data));
@@ -42,15 +43,29 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
 
   const strings = useStrings<StringEntries>(stringEntries);
 
+  const handleDelete = async () => {
+    try {
+      const { status } = await clients.accounts.delete(id);
+
+      if (status === 204) {
+        const accountIndex = accounts.findIndex(a => a.id === id);
+        const updatedAccounts = [
+          ...accounts.slice(0, accountIndex),
+          ...accounts.slice(accountIndex + 1),
+        ];
+
+        onAccountsUpdate(updatedAccounts);
+      }
+    } catch (error) {
+      setErrorMessage(strings.error);
+    }
+  };
+
   const formikConfig: FormikConfig<FormikValues> = {
-    initialValues: {
-      name: '',
-      accountTypeId: 1,
-      currencyId: 1,
-    },
+    initialValues,
     onSubmit: async values => {
       try {
-        const { status, data } = await clients.accounts.create({
+        const { status } = await clients.accounts.create({
           ...values,
           accountTypeId: +values.accountTypeId,
           currencyId: +values.currencyId,
@@ -58,18 +73,12 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
         });
 
         if (status === 200) {
-          setError(false);
-
-          onAccountsUpdate([...accounts, data]);
-        }
-
-        if (onAdd) {
-          onAdd();
+          setErrorMessage('');
         }
       } catch (e) {
         const { status } = e.response;
 
-        setError(true);
+        setErrorMessage(strings.error);
       }
     },
     enableReinitialize: true,
@@ -136,11 +145,20 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
 
             {+formik.values.accountTypeId === 2 && cardFields}
 
-            <button className="mb-1 w-auto self-end" type="submit">
-              {strings.add}
-            </button>
+            <div className="flex justify-between">
+              <button
+                className="mb-1 w-auto self-end"
+                type="button"
+                onClick={handleDelete}
+              >
+                {strings.delete}
+              </button>
+              <button className="mb-1 w-auto self-end" type="submit">
+                {strings.save}
+              </button>
+            </div>
 
-            {error && (
+            {errorMessage && (
               <div className="m-2 text-center text-red-600">
                 {strings.error}
               </div>
@@ -152,4 +170,4 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
   );
 };
 
-export { AddAccountForm };
+export { EditAccountForm };
