@@ -1,7 +1,8 @@
 import { Languages } from 'services/LanguagesService';
 
 export interface StringEntries {
-  add: string;
+  save: string;
+  delete: string;
   fields: {
     amount: string;
     transactionType: string;
@@ -17,7 +18,8 @@ export interface StringEntries {
 
 export const stringEntries: Languages<StringEntries> = {
   en: {
-    add: 'Add',
+    save: 'Save',
+    delete: 'Delete',
     fields: {
       amount: 'Amount',
       transactionType: 'Transaction type',
@@ -31,7 +33,8 @@ export const stringEntries: Languages<StringEntries> = {
     error: 'Something went wrong',
   },
   ru: {
-    add: 'Добавить',
+    save: 'Сохранить',
+    delete: 'Удалить',
     fields: {
       amount: 'Количество',
       transactionType: 'Тип транзакции',

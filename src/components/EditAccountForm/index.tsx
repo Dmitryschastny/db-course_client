@@ -35,7 +35,7 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
   const [accountTypes, setAccountTypes] = useState<AccountType[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     clients.banks.getAll().then(({ data }) => setBanks(data));
@@ -62,8 +62,8 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
           onEdit();
         }
       }
-    } catch (error) {
-      setErrorMessage(strings.error);
+    } catch (e) {
+      setError(true);
     }
   };
 
@@ -92,7 +92,7 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
       } catch (e) {
         const { status } = e.response;
 
-        setErrorMessage(strings.error);
+        setError(true);
       }
     },
     enableReinitialize: true,
@@ -175,7 +175,7 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
               </button>
             </div>
 
-            {errorMessage && (
+            {error && (
               <div className="m-2 text-center text-red-600">
                 {strings.error}
               </div>

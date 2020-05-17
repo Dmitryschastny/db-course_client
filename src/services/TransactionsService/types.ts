@@ -27,3 +27,6 @@ export type Transaction = {
 };
 
 export type TransactionsResponse = Transaction[];
+
+export type UpdateTransactionRequest = CreateTransactionRequest;
+export type UpdateTransactionResponse = Transaction;

@@ -26,18 +26,29 @@ const Transactions: React.FC = () => {
   }, []);
 
   const handleTransactionEdit = (transaction: Transaction) => {
-    const updatedTransaction = [...transactions];
-    const transactionIndex = updatedTransaction.findIndex(
+    const updatedTransactions = [...transactions];
+    const transactionIndex = updatedTransactions.findIndex(
       t => t.id === transaction.id
     );
 
-    updatedTransaction[transactionIndex] = transaction;
+    updatedTransactions[transactionIndex] = transaction;
+    updatedTransactions.sort((a, b) => a.date - b.date);
 
-    setTransactions(updatedTransaction);
+    setTransactions(updatedTransactions);
   };
 
   const handleTransactionAdd = (transaction: Transaction) => {
     setTransactions([...transactions, transaction]);
+  };
+
+  const handleTransactionDelete = (id: number) => {
+    const transactionIndex = transactions.findIndex(t => t.id === id);
+    const updatedTransactions = [
+      ...transactions.slice(0, transactionIndex),
+      ...transactions.slice(transactionIndex + 1),
+    ];
+
+    setTransactions(updatedTransactions);
   };
 
   let lastDate = transactions.length
@@ -93,6 +104,10 @@ const Transactions: React.FC = () => {
                   }}
                   onEdit={transaction => {
                     handleTransactionEdit(transaction);
+                    toggle();
+                  }}
+                  onDelete={() => {
+                    handleTransactionDelete(t.id);
                     toggle();
                   }}
                 />

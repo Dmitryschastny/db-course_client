@@ -24,9 +24,15 @@ interface Props {
   id: number;
   initialValues: FormikValues;
   onEdit(transaction: Transaction): void;
+  onDelete(): void;
 }
 
-const EditTransactionForm: React.FC<Props> = ({ id, initialValues }) => {
+const EditTransactionForm: React.FC<Props> = ({
+  id,
+  initialValues,
+  onEdit,
+  onDelete,
+}) => {
   const { settings, accounts } = useContext(AppContext);
 
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>(
@@ -48,6 +54,18 @@ const EditTransactionForm: React.FC<Props> = ({ id, initialValues }) => {
 
   const strings = useStrings<StringEntries>(stringEntries);
 
+  const handleDelete = async () => {
+    try {
+      const { status } = await clients.transactions.delete(id);
+
+      if (status === 204) {
+        onDelete();
+      }
+    } catch (e) {
+      setError(true);
+    }
+  };
+
   if (!accounts.length) {
     return (
       <div>You don&apos;t have any accounts, please add an account first.</div>
@@ -58,7 +76,7 @@ const EditTransactionForm: React.FC<Props> = ({ id, initialValues }) => {
     initialValues,
     onSubmit: async values => {
       try {
-        const { status } = await clients.transactions.create({
+        const { status, data } = await clients.transactions.update(id, {
           ...values,
           typeId: +values.typeId,
           accountId: +values.accountId,
@@ -66,7 +84,7 @@ const EditTransactionForm: React.FC<Props> = ({ id, initialValues }) => {
         });
 
         if (status === 200) {
-          setError(false);
+          onEdit(data);
         }
       } catch (e) {
         const { status } = e.response;
@@ -164,9 +182,18 @@ const EditTransactionForm: React.FC<Props> = ({ id, initialValues }) => {
               />
             </div>
 
-            <button className="mb-1 w-auto self-end" type="submit">
-              {strings.add}
-            </button>
+            <div className="flex justify-between">
+              <button
+                className="mb-1 w-auto self-end"
+                type="button"
+                onClick={handleDelete}
+              >
+                {strings.delete}
+              </button>
+              <button className="mb-1 w-auto self-end" type="submit">
+                {strings.save}
+              </button>
+            </div>
 
             {error && (
               <div className="m-2 text-center text-red-600">
