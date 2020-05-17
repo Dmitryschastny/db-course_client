@@ -9,6 +9,7 @@ import { User } from 'services/UsersService';
 import { NoMath } from 'pages/NoMath';
 import { Language } from 'services/LanguagesService';
 import { Currency } from 'services/CurrenciesService';
+import { Account } from 'services/AccountsService';
 
 type AuthContext = {
   authorized: boolean;
@@ -25,6 +26,8 @@ type AppContext = {
   user?: User;
   settings?: SettingsState;
   onSettingsUpdate(s: SettingsState): void;
+  accounts?: Account[];
+  onAccountsUpdate(a: Account[]): void;
 };
 
 export const AuthContext = React.createContext<AuthContext>({} as AuthContext);
@@ -33,7 +36,17 @@ export const AppContext = React.createContext<AppContext>({} as AppContext);
 const App: React.FC = () => {
   const [authorized, setAuthorized] = useState(!!localStorage.getItem('token'));
   const [user, setUser] = useState<User>();
+
   const [settings, setSettings] = useState<SettingsState>();
+  const [accounts, setAccounts] = useState<Account[]>([]);
+
+  const handleSettingsUpdate = (s: SettingsState) => {
+    setSettings(s);
+  };
+
+  const handleAccountsUpdate = (a: Account[]) => {
+    setAccounts(a);
+  };
 
   const verifyUser = async () => {
     const token = localStorage.getItem('token');
@@ -44,16 +57,13 @@ const App: React.FC = () => {
 
         setUser(data.user);
         setSettings(data.settings);
+        setAccounts(data.accounts);
         setAuthorized(true);
       } catch (error) {
         setAuthorized(false);
         localStorage.removeItem('token');
       }
     }
-  };
-
-  const handleSettingsUpdate = (s: SettingsState) => {
-    setSettings(s);
   };
 
   const handleAuth = (token: string) => {
@@ -91,14 +101,24 @@ const App: React.FC = () => {
     </Switch>
   );
 
+  const authContextValue = {
+    authorized,
+    onAuth: handleAuth,
+    onLogout: handleLogout,
+  };
+
+  const appContextValue = {
+    user,
+    settings,
+    onSettingsUpdate: handleSettingsUpdate,
+    accounts,
+    onAccountsUpdate: handleAccountsUpdate,
+  };
+
   return (
     <>
-      <AuthContext.Provider
-        value={{ authorized, onAuth: handleAuth, onLogout: handleLogout }}
-      >
-        <AppContext.Provider
-          value={{ user, settings, onSettingsUpdate: handleSettingsUpdate }}
-        >
+      <AuthContext.Provider value={authContextValue}>
+        <AppContext.Provider value={appContextValue}>
           {routesContent}
         </AppContext.Provider>
       </AuthContext.Provider>

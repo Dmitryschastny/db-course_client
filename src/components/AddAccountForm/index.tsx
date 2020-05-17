@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FormikConfig } from 'formik';
 import { FormikSelect } from 'components/FormikSelect';
 import { clients } from 'services/clients.config';
@@ -10,6 +10,7 @@ import { FormikNumberInput } from 'components/FormikNumberInput';
 import { Currency } from 'services/CurrenciesService';
 import * as yup from 'yup';
 import { FormikInput } from 'components/FormikInput';
+import { AppContext } from 'App';
 import { stringEntries, StringEntries } from './constants';
 
 interface FormikValues {
@@ -21,6 +22,8 @@ interface FormikValues {
 }
 
 const AddAccountForm: React.FC = () => {
+  const { accounts, onAccountsUpdate } = useContext(AppContext);
+
   const [banks, setBanks] = useState<Bank[]>([]);
   const [accountTypes, setAccountTypes] = useState<AccountType[]>([]);
   const [currencies, setCurrencies] = useState<Currency[]>([]);

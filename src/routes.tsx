@@ -11,6 +11,7 @@ type Route = {
   title?: Languages<string>;
   protected?: boolean;
   page: React.ComponentType;
+  icon?: string;
 };
 
 export enum Paths {
@@ -32,15 +33,6 @@ const routes: Route[] = [
     page: SignUp,
   },
   {
-    path: Paths.SETTINGS,
-    title: {
-      en: 'Settings',
-      ru: 'Настройки',
-    },
-    protected: true,
-    page: Settings,
-  },
-  {
     path: Paths.ACCOUNTS,
     title: {
       en: 'Accounts',
@@ -57,6 +49,16 @@ const routes: Route[] = [
     },
     protected: true,
     page: Transactions,
+  },
+  {
+    path: Paths.SETTINGS,
+    title: {
+      en: 'Settings',
+      ru: 'Настройки',
+    },
+    protected: true,
+    page: Settings,
+    icon: 'settings',
   },
 ];
 

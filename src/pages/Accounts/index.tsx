@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { PageTemplate } from 'components/templates/PageTemplate';
 import { AddAccountForm } from 'components/AddAccountForm';
 import { Modal } from 'components/Modal';
-import { clients } from 'services/clients.config';
-import { Account } from 'services/AccountsService';
+import { AppContext } from 'App';
 
 const Accounts: React.FC = () => {
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const { accounts } = useContext(AppContext);
 
-  useEffect(() => {
-    clients.accounts.getAll().then(({ data }) => setAccounts(data));
-  }, []);
+  let accountsRows;
 
-  const accountsRows = accounts.map(a => (
-    <tr>
-      <td>
-        {a.name} ({a.type.name})
-      </td>
-      <td className="text-right">
-        {a.balance} {a.currency.code}
-      </td>
-    </tr>
-  ));
+  if (accounts) {
+    accountsRows = accounts.map(a => (
+      <tr>
+        <td>
+          {a.name} ({a.type.name})
+        </td>
+        <td className="text-right">
+          {a.balance} {a.currency.code}
+        </td>
+      </tr>
+    ));
+  }
 
   return (
     <PageTemplate title="Accounts">

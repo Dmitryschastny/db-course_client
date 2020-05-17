@@ -1,4 +1,5 @@
 import { Settings } from 'services/SettingsService';
+import { Account } from '../AccountsService';
 import { Currency } from '../CurrenciesService';
 import { Language } from '../LanguagesService';
 
@@ -22,6 +23,7 @@ export type MeResponse = {
     language: Language;
     mainCurrency: Currency;
   };
+  accounts: Account[];
 };
 
 export type UpdateRequest = {

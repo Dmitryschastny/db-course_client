@@ -7,7 +7,6 @@ import { useStrings } from 'hooks/useStrings';
 import { FormikSelect } from 'components/FormikSelect';
 import { clients } from 'services/clients.config';
 import { TransactionType } from 'services/TransactionTypesService';
-import { Account } from 'services/AccountsService';
 import DatePicker from 'react-datepicker';
 import { Category, CategoriesResponse } from 'services/CategoriesService';
 import { FormikTextarea } from 'components/FormikTextarea';
@@ -19,12 +18,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 type FormikValues = CreateTransactionRequest;
 
 const AddTransactionForm: React.FC = () => {
-  const { settings } = useContext(AppContext);
+  const { settings, accounts } = useContext(AppContext);
 
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>(
     []
   );
-  const [accounts, setAccounts] = useState<Account[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const [done, setDone] = useState(false);
@@ -35,23 +33,19 @@ const AddTransactionForm: React.FC = () => {
   useEffect(() => {
     Promise.all([
       clients.transactionTypes.getAll(),
-      clients.accounts.getAll(),
       clients.categories.getAll(),
-    ]).then(
-      ([
-        { data: transactionsData },
-        { data: accountsData },
-        { data: categoriesData },
-      ]) => {
-        setTransactionTypes(transactionsData);
-        setAccounts(accountsData);
-        setCategories(categoriesData as CategoriesResponse);
-        setLoading(false);
-      }
-    );
+    ]).then(([{ data: transactionsData }, { data: categoriesData }]) => {
+      setTransactionTypes(transactionsData);
+      setCategories(categoriesData as CategoriesResponse);
+      setLoading(false);
+    });
   }, []);
 
   const strings = useStrings<StringEntries>(stringEntries);
+
+  if (!accounts) {
+    return null;
+  }
 
   if (!accounts.length && !loading) {
     return (
