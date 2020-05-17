@@ -8,7 +8,7 @@ import { StringEntries, stringEntries } from './constants';
 
 const Header: React.FC = () => {
   const { onLogout } = useContext(AuthContext);
-  const { accounts } = useContext(AppContext);
+  const { accounts, settings } = useContext(AppContext);
 
   const strings = useStrings<StringEntries>(stringEntries);
 
@@ -16,6 +16,9 @@ const Header: React.FC = () => {
 
   const settingsRoute = routes.find(r => r.path === Paths.SETTINGS);
   const settingsActive = location.pathname === Paths.SETTINGS;
+
+  const balance = accounts.reduce((sum, a) => sum + a.balance, 0);
+  const currency = settings.mainCurrency.code;
 
   return (
     <div className="px-10 pt-4">
@@ -41,8 +44,10 @@ const Header: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="text-xl font-bold">275 BYN</div>
-      <div className="text-sm text-grey">Balance</div>
+      <div className="text-xl font-bold">
+        {balance} {currency}
+      </div>
+      <div className="text-sm text-grey">{strings.balance}</div>
     </div>
   );
 };

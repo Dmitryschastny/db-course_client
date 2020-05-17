@@ -36,7 +36,7 @@ const Transactions: React.FC = () => {
       lastDate = date;
     }
 
-    const formattedDate = date.toLocaleString(settings?.language.code || 'en', {
+    const formattedDate = date.toLocaleString(settings.language.code, {
       month: 'long',
       year: 'numeric',
       day: 'numeric',

@@ -43,10 +43,6 @@ const AddTransactionForm: React.FC = () => {
 
   const strings = useStrings<StringEntries>(stringEntries);
 
-  if (!accounts) {
-    return null;
-  }
-
   if (!accounts.length && !loading) {
     return (
       <div>You don&apos;t have any accounts, please add an account first.</div>

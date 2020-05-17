@@ -7,20 +7,16 @@ import { AppContext } from 'App';
 const Accounts: React.FC = () => {
   const { accounts } = useContext(AppContext);
 
-  let accountsRows;
-
-  if (accounts) {
-    accountsRows = accounts.map(a => (
-      <tr>
-        <td>
-          {a.name} ({a.type.name})
-        </td>
-        <td className="text-right">
-          {a.balance} {a.currency.code}
-        </td>
-      </tr>
-    ));
-  }
+  const accountsRows = accounts.map(a => (
+    <tr>
+      <td>
+        {a.name} ({a.type.name})
+      </td>
+      <td className="text-right">
+        {a.balance} {a.currency.code}
+      </td>
+    </tr>
+  ));
 
   return (
     <PageTemplate title="Accounts">

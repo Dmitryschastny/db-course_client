@@ -24,10 +24,6 @@ const Settings: React.FC = () => {
     clients.currencies.getAll().then(({ data }) => setCurrencies(data));
   }, []);
 
-  if (!settings) {
-    return null;
-  }
-
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
       usePin: false,
@@ -35,20 +31,18 @@ const Settings: React.FC = () => {
       mainCurrencyId: settings.mainCurrency.id,
     },
     onSubmit: async values => {
-      if (user) {
-        const language = languages.find(l => l.id === +values.languageId);
-        const mainCurrency = currencies.find(
-          c => c.id === +values.mainCurrencyId
-        );
+      const language = languages.find(l => l.id === +values.languageId);
+      const mainCurrency = currencies.find(
+        c => c.id === +values.mainCurrencyId
+      );
 
-        if (language && mainCurrency) {
-          await clients.users.update(user?.id, { settings: values });
+      if (language && mainCurrency) {
+        await clients.users.update(user?.id, { settings: values });
 
-          onSettingsUpdate({
-            language,
-            mainCurrency,
-          });
-        }
+        onSettingsUpdate({
+          language,
+          mainCurrency,
+        });
       }
     },
     enableReinitialize: true,

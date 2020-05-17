@@ -10,6 +10,8 @@ import { NoMath } from 'pages/NoMath';
 import { Language } from 'services/LanguagesService';
 import { Currency } from 'services/CurrenciesService';
 import { Account } from 'services/AccountsService';
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 type AuthContext = {
   authorized: boolean;
@@ -23,10 +25,10 @@ type SettingsState = {
 };
 
 type AppContext = {
-  user?: User;
-  settings?: SettingsState;
+  user: User;
+  settings: SettingsState;
+  accounts: Account[];
   onSettingsUpdate(s: SettingsState): void;
-  accounts?: Account[];
   onAccountsUpdate(a: Account[]): void;
 };
 
@@ -39,6 +41,8 @@ const App: React.FC = () => {
 
   const [settings, setSettings] = useState<SettingsState>();
   const [accounts, setAccounts] = useState<Account[]>([]);
+
+  const [loading, setLoading] = useState(true);
 
   const handleSettingsUpdate = (s: SettingsState) => {
     setSettings(s);
@@ -62,6 +66,8 @@ const App: React.FC = () => {
       } catch (error) {
         setAuthorized(false);
         localStorage.removeItem('token');
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -108,20 +114,26 @@ const App: React.FC = () => {
   };
 
   const appContextValue = {
-    user,
-    settings,
+    user: user!,
+    settings: settings!,
+    accounts: accounts!,
     onSettingsUpdate: handleSettingsUpdate,
-    accounts,
     onAccountsUpdate: handleAccountsUpdate,
   };
 
   return (
     <>
-      <AuthContext.Provider value={authContextValue}>
-        <AppContext.Provider value={appContextValue}>
-          {routesContent}
-        </AppContext.Provider>
-      </AuthContext.Provider>
+      {loading ? (
+        <div className="h-full flex items-center justify-center">
+          <Loader type="TailSpin" color="#2196f3" height={100} width={100} />
+        </div>
+      ) : (
+        <AuthContext.Provider value={authContextValue}>
+          <AppContext.Provider value={appContextValue}>
+            {routesContent}
+          </AppContext.Provider>
+        </AuthContext.Provider>
+      )}
     </>
   );
 };
