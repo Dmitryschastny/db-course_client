@@ -6,6 +6,8 @@ import { Accounts } from 'pages/Accounts';
 import { Transactions } from 'pages/Transactions';
 import { Languages } from 'services/LanguagesService';
 import { Users } from 'pages/Users';
+import { Currencies } from 'pages/Currencies';
+import { Languages as LanguagesPage } from 'pages/Languages';
 
 type Route = {
   path: string;
@@ -24,6 +26,8 @@ export enum Paths {
   TRANSACTIONS = '/transactions',
   ACCOUNTS = '/accounts',
   USERS = '/users',
+  CURRENCIES = '/currencies',
+  LANGUAGES = '/languages',
 }
 
 const routes: Route[] = [
@@ -74,6 +78,26 @@ const routes: Route[] = [
     },
     protected: true,
     page: Users,
+    role: 1,
+  },
+  {
+    path: Paths.CURRENCIES,
+    title: {
+      en: 'Currencies',
+      ru: 'Валюты',
+    },
+    protected: true,
+    page: Currencies,
+    role: 1,
+  },
+  {
+    path: Paths.LANGUAGES,
+    title: {
+      en: 'Languages',
+      ru: 'Языки',
+    },
+    protected: true,
+    page: LanguagesPage,
     role: 1,
   },
 ];

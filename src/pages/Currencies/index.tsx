@@ -3,32 +3,33 @@ import { PageTemplate } from 'components/templates/PageTemplate';
 import { AppContext } from 'App';
 import { User } from 'services/UsersService/types';
 import { clients } from 'services/clients.config';
+import { Currency } from 'services/CurrenciesService';
 
-const Users: React.FC = () => {
+const Currencies: React.FC = () => {
   // const { user, settings, onSettingsUpdate } = useContext(AppContext);
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   useEffect(() => {
-    clients.users.getAll().then(({ data }) => setUsers(data));
+    clients.currencies.getAll().then(({ data }) => setCurrencies(data));
   }, []);
 
-  const usersRows = users.map(u => (
-    <tr key={u.id}>
-      <td>{u.email}</td>
-      <td>{u.role.name}</td>
+  const currenciesRows = currencies.map(c => (
+    <tr key={c.id}>
+      <td>{c.name}</td>
+      <td>{c.code}</td>
     </tr>
   ));
 
   return (
-    <PageTemplate title="Users">
+    <PageTemplate title="Currencies">
       <div className="flex flex-col p-5 md:w-1/2">
         <table className="w-full">
-          <tbody>{usersRows}</tbody>
+          <tbody>{currenciesRows}</tbody>
         </table>
       </div>
     </PageTemplate>
   );
 };
 
-export { Users };
+export { Currencies };
