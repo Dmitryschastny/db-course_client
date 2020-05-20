@@ -4,6 +4,8 @@ import { AddAccountForm } from 'components/AddAccountForm';
 import { Modal } from 'components/Modal';
 import { AppContext } from 'App';
 import { EditAccountForm } from 'components/EditAccountForm';
+import { useStrings } from 'hooks/useStrings';
+import { StringEntries, stringEntries } from './constants';
 
 const formatCardNumber = (number: string | number): string => {
   const firstPart = number.toString().slice(0, 4);
@@ -65,14 +67,16 @@ const Accounts: React.FC = () => {
     );
   });
 
+  const strings = useStrings<StringEntries>(stringEntries);
+
   return (
-    <PageTemplate title="Accounts">
+    <PageTemplate title={strings.pageTitle}>
       <div className="flex flex-col md:w-1/2">
         <div className="flex items-center mb-2 justify-between">
           <Modal content={toggle => <AddAccountForm onAdd={toggle} />}>
             {toggle => (
               <>
-                <div className=" text-lg font-bold">Accounts</div>
+                <div className="text-lg font-bold">{strings.accountsList}</div>
                 <button
                   type="button"
                   className="p-1 w-10 self-end"

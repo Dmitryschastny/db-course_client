@@ -163,7 +163,7 @@ const Transactions: React.FC = () => {
   const pageContent = (
     <>
       <div className="flex items-center mb-2 justify-between">
-        <div className="ext-lg font-bold">Transactions</div>
+        <div className="text-lg font-bold">{strings.transactionsList}</div>
         <div>
           <Modal
             content={toggle => (
@@ -216,7 +216,7 @@ const Transactions: React.FC = () => {
   );
 
   return (
-    <PageTemplate title="Transactions">
+    <PageTemplate title={strings.pageTitle}>
       <div className="flex flex-col md:w-1/2">{!loading && pageContent}</div>
     </PageTemplate>
   );

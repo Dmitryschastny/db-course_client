@@ -2,16 +2,16 @@ import { Languages } from 'services/LanguagesService';
 
 export interface StringEntries {
   pageTitle: string;
-  save: string;
+  accountsList: string;
 }
 
 export const stringEntries: Languages<StringEntries> = {
   en: {
-    pageTitle: 'Settings',
-    save: 'Save',
+    pageTitle: 'Accounts',
+    accountsList: 'Accounts list',
   },
   ru: {
-    pageTitle: 'Настройки',
-    save: 'Сохранить',
+    pageTitle: 'Аккаунты',
+    accountsList: 'Список аккаунтов',
   },
 };
