@@ -8,7 +8,7 @@ import { StringEntries, stringEntries } from './constants';
 
 const Header: React.FC = () => {
   const { onLogout } = useContext(AuthContext);
-  const { accounts, settings } = useContext(AppContext);
+  const { user, accounts, settings } = useContext(AppContext);
 
   const strings = useStrings<StringEntries>(stringEntries);
 
@@ -28,26 +28,36 @@ const Header: React.FC = () => {
           <button className="mr-4" type="button" onClick={onLogout}>
             {strings.logout}
           </button>
-          {settingsActive ? (
-            <i
-              className="material-icons text-3xl align-middle"
-              style={{ color: '#2196f3' }}
-            >
-              {settingsRoute?.icon}
-            </i>
+          {user.role.id === 2 ? (
+            <>
+              {settingsActive ? (
+                <i
+                  className="material-icons text-3xl align-middle"
+                  style={{ color: '#2196f3' }}
+                >
+                  {settingsRoute?.icon}
+                </i>
+              ) : (
+                <Link to={settingsRoute?.path || ''}>
+                  <i className="material-icons text-3xl align-middle">
+                    {settingsRoute?.icon}
+                  </i>
+                </Link>
+              )}
+            </>
           ) : (
-            <Link to={settingsRoute?.path || ''}>
-              <i className="material-icons text-3xl align-middle">
-                {settingsRoute?.icon}
-              </i>
-            </Link>
+            strings.admin
           )}
         </div>
       </div>
-      <div className="text-xl font-bold">
-        {balance} {currency}
-      </div>
-      <div className="text-sm text-grey">{strings.balance}</div>
+      {user.role.id === 2 && (
+        <>
+          <div className="text-xl font-bold">
+            {balance} {currency}
+          </div>
+          <div className="text-sm text-grey">{strings.balance}</div>
+        </>
+      )}
     </div>
   );
 };

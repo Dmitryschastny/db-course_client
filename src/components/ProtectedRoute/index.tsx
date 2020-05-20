@@ -1,17 +1,42 @@
 import React, { useContext } from 'react';
 import { Route, Redirect, useHistory, RouteProps } from 'react-router-dom';
-import { AuthContext } from 'App';
+import { AuthContext, AppContext } from 'App';
 import { Paths } from 'routes';
 
-type Props = RouteProps;
+interface Props extends RouteProps {
+  role?: number;
+}
 
-const ProtectedRoute: React.FC<Props> = ({ children, ...props }) => {
+const ProtectedRoute: React.FC<Props> = ({ role, children, ...props }) => {
+  const { user } = useContext(AppContext);
   const { authorized } = useContext(AuthContext);
 
   const history = useHistory();
 
   return authorized ? (
-    <Route {...props}>{children}</Route>
+    <>
+      {role && user.role.id !== role ? (
+        <>
+          {user.role.id === 1 ? (
+            <Redirect
+              to={{
+                pathname: Paths.USERS,
+                state: { from: history.location },
+              }}
+            />
+          ) : (
+            <Redirect
+              to={{
+                pathname: Paths.ACCOUNTS,
+                state: { from: history.location },
+              }}
+            />
+          )}
+        </>
+      ) : (
+        <Route {...props}>{children}</Route>
+      )}
+    </>
   ) : (
     <Redirect
       to={{

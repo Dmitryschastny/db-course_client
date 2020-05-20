@@ -12,9 +12,15 @@ export type AuthResponse = {
   token: string;
 };
 
+type Role = {
+  id: number;
+  name: string;
+};
+
 export type User = {
   id: number;
   email: string;
+  role: Role;
 };
 
 export type MeResponse = {

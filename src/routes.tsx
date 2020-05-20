@@ -5,6 +5,7 @@ import { Settings } from 'pages/Settings';
 import { Accounts } from 'pages/Accounts';
 import { Transactions } from 'pages/Transactions';
 import { Languages } from 'services/LanguagesService';
+import { Users } from 'pages/Users';
 
 type Route = {
   path: string;
@@ -12,6 +13,7 @@ type Route = {
   protected?: boolean;
   page: React.ComponentType;
   icon?: string;
+  role?: number;
 };
 
 export enum Paths {
@@ -21,6 +23,7 @@ export enum Paths {
   SETTINGS = '/settings',
   TRANSACTIONS = '/transactions',
   ACCOUNTS = '/accounts',
+  USERS = '/users',
 }
 
 const routes: Route[] = [
@@ -40,6 +43,7 @@ const routes: Route[] = [
     },
     protected: true,
     page: Accounts,
+    role: 2,
   },
   {
     path: Paths.TRANSACTIONS,
@@ -49,6 +53,7 @@ const routes: Route[] = [
     },
     protected: true,
     page: Transactions,
+    role: 2,
   },
   {
     path: Paths.SETTINGS,
@@ -59,6 +64,17 @@ const routes: Route[] = [
     protected: true,
     page: Settings,
     icon: 'settings',
+    role: 2,
+  },
+  {
+    path: Paths.USERS,
+    title: {
+      en: 'Users',
+      ru: 'Пользователи',
+    },
+    protected: true,
+    page: Users,
+    role: 1,
   },
 ];
 

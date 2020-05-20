@@ -92,9 +92,9 @@ const App: React.FC = () => {
 
   const routesContent = (
     <Switch>
-      {routes.map(({ path, page: Page, protected: p }) =>
+      {routes.map(({ path, page: Page, protected: p, role }) =>
         p ? (
-          <ProtectedRoute path={path} key={path} exact>
+          <ProtectedRoute path={path} key={path} exact role={role}>
             <Page />
           </ProtectedRoute>
         ) : (
