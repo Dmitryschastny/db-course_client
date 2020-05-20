@@ -35,7 +35,7 @@ const Modal: React.FC<Props> = ({ content, children }) => {
             {typeof content === 'function' ? content(toggle) : content}
           </div>
           <button className="self-start" type="button" onClick={() => toggle()}>
-            ×
+            <i className="material-icons align-middle">close</i>
           </button>
         </div>
       </ReactModal>

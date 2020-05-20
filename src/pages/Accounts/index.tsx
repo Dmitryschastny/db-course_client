@@ -78,7 +78,7 @@ const Accounts: React.FC = () => {
                   className="p-1 w-10 self-end"
                   onClick={() => toggle()}
                 >
-                  +
+                  <i className="material-icons align-middle">add</i>
                 </button>
               </>
             )}

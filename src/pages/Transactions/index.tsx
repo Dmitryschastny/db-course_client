@@ -6,6 +6,9 @@ import { Transaction } from 'services/TransactionsService';
 import { clients } from 'services/clients.config';
 import { AppContext } from 'App';
 import { EditTransactionForm } from 'components/EditTransactionForm';
+import { CSVLink } from 'react-csv';
+import { useStrings } from 'hooks/useStrings';
+import { StringEntries, stringEntries } from './constants';
 
 const Transactions: React.FC = () => {
   const { accounts, settings } = useContext(AppContext);
@@ -50,6 +53,8 @@ const Transactions: React.FC = () => {
 
     setTransactions(updatedTransactions);
   };
+
+  const strings = useStrings<StringEntries>(stringEntries);
 
   let lastDate = transactions.length
     ? new Date(transactions[0].date)
@@ -145,32 +150,63 @@ const Transactions: React.FC = () => {
     );
   });
 
+  const exportData = transactions.map(t => [
+    t.account.name,
+    t.amount,
+    t.category?.name,
+    t.date,
+    t.note,
+    t.place.name,
+    t.type.name,
+  ]);
+
   const pageContent = (
     <>
       <div className="flex items-center mb-2 justify-between">
-        <Modal
-          content={toggle => (
-            <AddTransactionForm
-              onAdd={transaction => {
-                handleTransactionAdd(transaction);
-                toggle();
-              }}
-            />
-          )}
-        >
-          {toggle => (
-            <>
-              <div className="ext-lg font-bold">Transactions</div>
+        <div className="ext-lg font-bold">Transactions</div>
+        <div>
+          <Modal
+            content={toggle => (
+              <AddTransactionForm
+                onAdd={transaction => {
+                  handleTransactionAdd(transaction);
+                  toggle();
+                }}
+              />
+            )}
+          >
+            {toggle => (
+              <button
+                type="button"
+                className="p-1 w-10 self-end mr-4"
+                onClick={() => toggle()}
+              >
+                <i className="material-icons align-middle">add</i>
+              </button>
+            )}
+          </Modal>
+          <Modal content={strings.exportError}>
+            {toggle => (
               <button
                 type="button"
                 className="p-1 w-10 self-end"
-                onClick={() => toggle()}
+                onClick={() => {
+                  if (!exportData.length) {
+                    toggle();
+                  }
+                }}
               >
-                +
+                {exportData.length ? (
+                  <CSVLink data={exportData}>
+                    <i className="material-icons align-middle">import_export</i>
+                  </CSVLink>
+                ) : (
+                  <i className="material-icons align-middle">import_export</i>
+                )}
               </button>
-            </>
-          )}
-        </Modal>
+            )}
+          </Modal>
+        </div>
       </div>
 
       <table className="w-full">
