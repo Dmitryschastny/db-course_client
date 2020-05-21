@@ -213,12 +213,12 @@ const Transactions: React.FC = () => {
                 type="button"
                 className="p-1 w-10 self-end"
                 onClick={() => {
-                  if (!exportData.length) {
+                  if (!transactions.length) {
                     toggle();
                   }
                 }}
               >
-                {exportData.length ? (
+                {transactions.length ? (
                   <CSVLink data={exportData}>
                     <i className="material-icons align-middle">import_export</i>
                   </CSVLink>

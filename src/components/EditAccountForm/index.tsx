@@ -146,7 +146,7 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
 
         return (
           <>
-            <FormikInput name="name" label="Account name" />
+            <FormikInput name="name" label={strings.accountName} />
 
             <FormikSelect label={strings.accountType} name="accountTypeId">
               {accountTypeOptions}

@@ -64,11 +64,14 @@ const Settings: React.FC = () => {
         <Formik {...formikConfig}>
           {formik => (
             <Form className="flex flex-col">
-              <FormikSelect label="Language" name="languageId">
+              <FormikSelect label={strings.fields.language} name="languageId">
                 {languagesOptions}
               </FormikSelect>
 
-              <FormikSelect label="Main currency" name="mainCurrencyId">
+              <FormikSelect
+                label={strings.fields.mainCurrency}
+                name="mainCurrencyId"
+              >
                 {currenciesOptions}
               </FormikSelect>
 

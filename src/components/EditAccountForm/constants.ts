@@ -1,6 +1,7 @@
 import { Languages } from 'services/LanguagesService';
 
 export interface StringEntries {
+  accountName: string;
   accountType: string;
   bank: string;
   save: string;
@@ -10,6 +11,7 @@ export interface StringEntries {
 
 export const stringEntries: Languages<StringEntries> = {
   en: {
+    accountName: 'Account name',
     accountType: 'Account type',
     bank: 'Bank',
     save: 'Save',
@@ -17,6 +19,7 @@ export const stringEntries: Languages<StringEntries> = {
     error: 'Something went wrong',
   },
   ru: {
+    accountName: 'Наименование аккаунта',
     accountType: 'Тип аккаунта',
     bank: 'Банк',
     save: 'Сохранить',

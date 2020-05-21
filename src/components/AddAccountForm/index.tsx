@@ -10,6 +10,10 @@ import { FormikNumberInput } from 'components/FormikNumberInput';
 import { Currency } from 'services/CurrenciesService';
 import * as yup from 'yup';
 import { FormikInput } from 'components/FormikInput';
+import {
+  CommonStringEntries,
+  commonStringEntries,
+} from 'constants/localization';
 import { AppContext } from 'App';
 import { stringEntries, StringEntries } from './constants';
 
@@ -41,6 +45,7 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
   }, []);
 
   const strings = useStrings<StringEntries>(stringEntries);
+  const commonStrings = useStrings<CommonStringEntries>(commonStringEntries);
 
   const formikConfig: FormikConfig<FormikValues> = {
     initialValues: {
@@ -74,13 +79,13 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
     },
     enableReinitialize: true,
     validationSchema: yup.object().shape({
-      name: yup.string().required('Required'),
+      name: yup.string().required(commonStrings.required),
       cardNumber: yup.string().when(['accountTypeId'], {
         is: accountTypeId => +accountTypeId === 2,
         then: yup
           .string()
           .length(16, 'Invalid input')
-          .required('Required'),
+          .required(commonStrings.required),
       }),
     }),
   };
@@ -124,13 +129,13 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
 
         return (
           <>
-            <FormikInput name="name" label="Account name" />
+            <FormikInput name="name" label={strings.accountName} />
 
             <FormikSelect label={strings.accountType} name="accountTypeId">
               {accountTypeOptions}
             </FormikSelect>
 
-            <FormikSelect label="Currency" name="currencyId">
+            <FormikSelect label={strings.currency} name="currencyId">
               {currenciesOptions}
             </FormikSelect>
 
