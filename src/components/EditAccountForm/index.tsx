@@ -89,7 +89,7 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
           }
         }
       } catch (e) {
-        const { status } = e.response;
+        // const { status } = e.response;
 
         setError(true);
       }

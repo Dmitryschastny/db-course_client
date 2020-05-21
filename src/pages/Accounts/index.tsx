@@ -11,7 +11,7 @@ const formatCardNumber = (number: string | number): string => {
   const firstPart = number.toString().slice(0, 4);
   const lastPart = number.toString().slice(12);
 
-  return `${firstPart} #### #### ${lastPart}`;
+  return `${firstPart} XXXX XXXX ${lastPart}`;
 };
 
 const Accounts: React.FC = () => {

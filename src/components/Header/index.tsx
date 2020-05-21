@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext, AppContext } from 'App';
 import { useStrings } from 'hooks/useStrings';
 import { Navigation } from 'components/Navigation';
 import { routes, Paths } from 'routes';
 import { Link, useLocation } from 'react-router-dom';
-import { clients } from 'services/clients.config';
 import { StringEntries, stringEntries } from './constants';
 
 const Header: React.FC = () => {

@@ -1,13 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageTemplate } from 'components/templates/PageTemplate';
-import { AppContext } from 'App';
-import { User } from 'services/UsersService/types';
 import { clients } from 'services/clients.config';
 import { Currency } from 'services/CurrenciesService';
 
 const Currencies: React.FC = () => {
-  // const { user, settings, onSettingsUpdate } = useContext(AppContext);
-
   const [currencies, setCurrencies] = useState<Currency[]>([]);
 
   useEffect(() => {

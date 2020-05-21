@@ -34,7 +34,7 @@ const EditTransactionForm: React.FC<Props> = ({
   onEdit,
   onDelete,
 }) => {
-  const { settings, accounts } = useContext(AppContext);
+  const { accounts } = useContext(AppContext);
 
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>(
     []
@@ -88,7 +88,7 @@ const EditTransactionForm: React.FC<Props> = ({
           onEdit(data);
         }
       } catch (e) {
-        const { status } = e.response;
+        // const { status } = e.response;
 
         setError(true);
       }

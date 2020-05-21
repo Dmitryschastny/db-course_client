@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { Navigation } from 'components/Navigation';
+import React from 'react';
 
 const Footer: React.FC = () => {
   return (

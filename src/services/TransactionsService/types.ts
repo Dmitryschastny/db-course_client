@@ -21,7 +21,7 @@ export type Transaction = {
   account: Account;
   category?: Category;
   // currency
-  place: Place;
+  place?: Place;
   type: TransactionType;
   // exchange rate
 };

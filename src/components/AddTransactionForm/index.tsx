@@ -26,7 +26,7 @@ interface Props {
 }
 
 const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
-  const { settings, accounts } = useContext(AppContext);
+  const { accounts } = useContext(AppContext);
 
   const [transactionTypes, setTransactionTypes] = useState<TransactionType[]>(
     []
@@ -74,7 +74,7 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
           onAdd(data);
         }
       } catch (e) {
-        const { status } = e.response;
+        // const { status } = e.response;
 
         setError(true);
       }

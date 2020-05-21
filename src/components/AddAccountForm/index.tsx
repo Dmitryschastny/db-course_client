@@ -67,7 +67,7 @@ const AddAccountForm: React.FC<Props> = ({ onAdd }) => {
           onAdd();
         }
       } catch (e) {
-        const { status } = e.response;
+        // const { status } = e.response;
 
         setError(true);
       }

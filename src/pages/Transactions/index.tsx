@@ -165,7 +165,7 @@ const Transactions: React.FC = () => {
     t.category?.name,
     t.date,
     t.note,
-    t.place.name,
+    t.place?.name,
     t.type.name,
   ]);
 
