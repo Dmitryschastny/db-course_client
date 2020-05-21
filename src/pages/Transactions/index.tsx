@@ -133,12 +133,12 @@ const Transactions: React.FC = () => {
                       <div className="text-lg font-bold">
                         {t.category?.name}
                       </div>
-                      <div className="text-gray-600">{t.type.name}</div>
+                      <div className="text-gray-600">{t.account.name}</div>
                     </div>
                     <div className={amountClass}>
                       {minus && '-'}
                       {plus && '+'}
-                      {t.amount} BYN
+                      {t.amount} {t.account.currency.code}
                     </div>
                   </div>
                 </div>
@@ -151,13 +151,13 @@ const Transactions: React.FC = () => {
   });
 
   const exportData = transactions.map(t => [
-    t.account.name,
-    t.amount,
-    t.category?.name,
-    t.date,
-    t.note,
-    t.place.name,
-    t.type.name,
+    // t.account.name,
+    // t.amount,
+    // t.category?.name,
+    // t.date,
+    // t.note,
+    // t.place.name,
+    // t.type.name,
   ]);
 
   const pageContent = (

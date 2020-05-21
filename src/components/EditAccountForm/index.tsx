@@ -15,7 +15,6 @@ import { stringEntries, StringEntries } from './constants';
 
 interface FormikValues {
   name?: string;
-  balance: number;
   accountTypeId: number;
   currencyId: number;
   bankId?: number;
@@ -149,8 +148,6 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
         return (
           <>
             <FormikInput name="name" label="Account name" />
-
-            <FormikNumberInput formik={formik} name="balance" label="Balance" />
 
             <FormikSelect label={strings.accountType} name="accountTypeId">
               {accountTypeOptions}

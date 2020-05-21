@@ -31,7 +31,6 @@ const Accounts: React.FC = () => {
                 id={a.id}
                 initialValues={{
                   name: a.name,
-                  balance: a.balance,
                   accountTypeId: a.type.id,
                   currencyId: a.currency.id,
                   bankId: a.card?.bank.id,

@@ -127,6 +127,8 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
           formik.values.categoryId = currentCategory.id;
         }
 
+        const account = accounts.find(a => a.id === +formik.values.accountId);
+
         return (
           <>
             <FormikNumberInput
@@ -134,7 +136,7 @@ const AddTransactionForm: React.FC<Props> = ({ onAdd }) => {
               formik={formik}
               name="amount"
               label={strings.fields.amount}
-              suffix={` ${settings?.mainCurrency.code}`}
+              suffix={` ${account?.currency.code}`}
             />
 
             <FormikSelect label={strings.fields.transactionType} name="typeId">
