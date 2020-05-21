@@ -61,6 +61,9 @@ const App: React.FC = () => {
     } = await clients.users.getBalance();
 
     setBalance(userBalance);
+
+    const { data } = await clients.accounts.getAll();
+    setAccounts(data);
   };
 
   const verifyUser = async () => {
