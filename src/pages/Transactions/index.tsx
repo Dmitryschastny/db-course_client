@@ -159,15 +159,28 @@ const Transactions: React.FC = () => {
     );
   });
 
-  const exportData = transactions.map(t => [
-    // t.account.name,
-    // t.amount,
-    // t.category?.name,
-    // t.date,
-    // t.note,
-    // t.place.name,
-    // t.type.name,
+  let exportData = transactions.map(t => [
+    t.account.name,
+    t.amount,
+    t.category?.name,
+    t.date,
+    t.note,
+    t.place.name,
+    t.type.name,
   ]);
+
+  exportData = [
+    [
+      'Account',
+      'Amount',
+      'Category',
+      'Date',
+      'Note',
+      'Place',
+      'Transaction type',
+    ],
+    ...exportData,
+  ];
 
   const pageContent = (
     <>
