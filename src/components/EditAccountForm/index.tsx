@@ -104,7 +104,6 @@ const EditAccountForm: React.FC<Props> = ({ id, initialValues, onEdit }) => {
           .length(16, 'Invalid input')
           .required('Required'),
       }),
-      balance: yup.number().required('Required'),
     }),
   };
 

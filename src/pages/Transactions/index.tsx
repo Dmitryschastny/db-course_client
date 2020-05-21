@@ -84,7 +84,7 @@ const Transactions: React.FC = () => {
     amountClass = plus ? 'text-green-600' : amountClass;
 
     return (
-      <>
+      <React.Fragment key={t.id}>
         {showDate && (
           <tr>
             <td className="pb-2" colSpan={2}>
@@ -146,7 +146,7 @@ const Transactions: React.FC = () => {
             </Modal>
           </td>
         </tr>
-      </>
+      </React.Fragment>
     );
   });
 

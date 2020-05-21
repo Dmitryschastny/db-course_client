@@ -22,7 +22,7 @@ const Accounts: React.FC = () => {
     const icon = card ? 'credit_card' : 'account_balance_wallet';
 
     return (
-      <tr>
+      <tr key={a.id}>
         <td className="pb-2">
           <Modal
             content={toggle => (
