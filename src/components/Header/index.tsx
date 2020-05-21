@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext, AppContext } from 'App';
 import { useStrings } from 'hooks/useStrings';
 import { Navigation } from 'components/Navigation';
 import { routes, Paths } from 'routes';
 import { Link, useLocation } from 'react-router-dom';
+import { clients } from 'services/clients.config';
 import { StringEntries, stringEntries } from './constants';
 
 const Header: React.FC = () => {
   const { onLogout } = useContext(AuthContext);
-  const { user, accounts, settings } = useContext(AppContext);
+  const { user, settings, balance } = useContext(AppContext);
 
   const strings = useStrings<StringEntries>(stringEntries);
 
@@ -17,7 +18,6 @@ const Header: React.FC = () => {
   const settingsRoute = routes.find(r => r.path === Paths.SETTINGS);
   const settingsActive = location.pathname === Paths.SETTINGS;
 
-  const balance = accounts.reduce((sum, a) => sum + a.balance, 0);
   const currency = settings.mainCurrency.code;
 
   return (
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
       {user.role.id === 2 && (
         <>
           <div className="text-xl font-bold">
-            {balance} {currency}
+            {balance.toFixed(2)} {currency}
           </div>
           <div className="text-sm text-grey">{strings.balance}</div>
         </>

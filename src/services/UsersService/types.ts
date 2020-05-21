@@ -35,3 +35,7 @@ export type MeResponse = {
 export type UpdateRequest = {
   settings?: Settings;
 };
+
+export type GetBalanceResponse = {
+  balance: number;
+};

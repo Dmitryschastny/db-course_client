@@ -1,6 +1,12 @@
 import { Http, Response } from 'http/types';
 import { CrudService } from '../CrudService';
-import { Credentials, AuthResponse, MeResponse, UpdateRequest } from './types';
+import {
+  Credentials,
+  AuthResponse,
+  MeResponse,
+  UpdateRequest,
+  GetBalanceResponse,
+} from './types';
 
 export class UsersService extends CrudService {
   constructor(http: Http) {
@@ -17,6 +23,10 @@ export class UsersService extends CrudService {
 
   update(id: number, data: UpdateRequest): Promise<Response<{}>> {
     return this.http.put(`${this.path}/${id}`, data);
+  }
+
+  getBalance(): Promise<Response<GetBalanceResponse>> {
+    return this.http.get(`balance`);
   }
 }
 

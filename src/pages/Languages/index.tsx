@@ -3,12 +3,12 @@ import { PageTemplate } from 'components/templates/PageTemplate';
 import { AppContext } from 'App';
 import { User } from 'services/UsersService/types';
 import { clients } from 'services/clients.config';
-import { Currency } from 'services/CurrenciesService';
+import { Language } from 'services/LanguagesService';
 
 const Languages: React.FC = () => {
   // const { user, settings, onSettingsUpdate } = useContext(AppContext);
 
-  const [languages, setLanguages] = useState<Currency[]>([]);
+  const [languages, setLanguages] = useState<Language[]>([]);
 
   useEffect(() => {
     clients.languages.getAll().then(({ data }) => setLanguages(data));

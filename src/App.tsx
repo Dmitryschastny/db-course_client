@@ -28,6 +28,8 @@ type AppContext = {
   user: User;
   settings: SettingsState;
   accounts: Account[];
+  balance: number;
+  updateBalance(): Promise<void>;
   onSettingsUpdate(s: SettingsState): void;
   onAccountsUpdate(a: Account[]): void;
 };
@@ -41,6 +43,7 @@ const App: React.FC = () => {
 
   const [settings, setSettings] = useState<SettingsState>();
   const [accounts, setAccounts] = useState<Account[]>([]);
+  const [balance, setBalance] = useState<number>(0);
 
   const [loading, setLoading] = useState(true);
 
@@ -50,6 +53,14 @@ const App: React.FC = () => {
 
   const handleAccountsUpdate = (a: Account[]) => {
     setAccounts(a);
+  };
+
+  const updateBalance = async () => {
+    const {
+      data: { balance: userBalance },
+    } = await clients.users.getBalance();
+
+    setBalance(userBalance);
   };
 
   const verifyUser = async () => {
@@ -90,6 +101,10 @@ const App: React.FC = () => {
     verifyUser();
   }, []);
 
+  useEffect(() => {
+    updateBalance();
+  }, [accounts, settings]);
+
   const routesContent = (
     <Switch>
       {routes.map(({ path, page: Page, protected: p, role }) =>
@@ -119,6 +134,8 @@ const App: React.FC = () => {
     user: user!,
     settings: settings!,
     accounts: accounts!,
+    balance,
+    updateBalance,
     onSettingsUpdate: handleSettingsUpdate,
     onAccountsUpdate: handleAccountsUpdate,
   };
