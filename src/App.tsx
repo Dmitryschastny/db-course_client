@@ -61,9 +61,6 @@ const App: React.FC = () => {
     } = await clients.users.getBalance();
 
     setBalance(userBalance);
-
-    const { data } = await clients.accounts.getAll();
-    setAccounts(data);
   };
 
   const verifyUser = async () => {
@@ -105,7 +102,9 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    updateBalance();
+    if (authorized) {
+      updateBalance();
+    }
   }, [accounts, settings]);
 
   const routesContent = (

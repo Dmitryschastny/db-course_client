@@ -11,7 +11,9 @@ import { useStrings } from 'hooks/useStrings';
 import { StringEntries, stringEntries } from './constants';
 
 const Transactions: React.FC = () => {
-  const { accounts, settings, updateBalance } = useContext(AppContext);
+  const { accounts, settings, updateBalance, onAccountsUpdate } = useContext(
+    AppContext
+  );
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
@@ -29,7 +31,10 @@ const Transactions: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    updateBalance();
+    if (!loading) {
+      updateBalance();
+      clients.accounts.getAll().then(({ data }) => onAccountsUpdate(data));
+    }
   }, [transactions]);
 
   const handleTransactionEdit = (transaction: Transaction) => {
