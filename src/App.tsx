@@ -74,6 +74,7 @@ const App: React.FC = () => {
         setSettings(data.settings);
         setAccounts(data.accounts);
         setAuthorized(true);
+        updateBalance();
       } catch (error) {
         setAuthorized(false);
         localStorage.removeItem('token');
